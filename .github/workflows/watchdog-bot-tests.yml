@@ -22,7 +22,11 @@ jobs:
           --health-timeout 5s
           --health-retries 5
         ports:
-          - 5432:5432
+          - 5432:5432          
+      
+    permissions:
+      checks: write        
+        
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
