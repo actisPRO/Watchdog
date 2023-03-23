@@ -44,5 +44,5 @@ jobs:
       if: success() || failure()  
       with:
         name: 'Test results'
-        path: 'Watchdog.Tests/TestResults/*.trx'
+        path: 'Watchdog.Bot.Tests/TestResults/*.trx'
         reporter: 'dotnet-trx'
