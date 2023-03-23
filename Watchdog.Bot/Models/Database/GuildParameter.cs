@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Watchdog.Bot.Models;
+namespace Watchdog.Bot.Models.Database;
 
 [PrimaryKey(nameof(Name), nameof(GuildId))]
 public sealed class GuildParameter : IEntity

@@ -2,7 +2,7 @@
 using DSharpPlus;
 using Watchdog.Bot.Enums;
 
-namespace Watchdog.Bot.Models;
+namespace Watchdog.Bot.Models.Database;
 
 public sealed class Permission : IEntity
 {

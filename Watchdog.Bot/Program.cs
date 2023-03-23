@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Watchdog.Bot;
 using Watchdog.Bot.Events;
+using Watchdog.Bot.Mapping;
 using Watchdog.Bot.Options;
 using Watchdog.Bot.Repositories;
 using Watchdog.Bot.Services;
@@ -16,6 +17,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.AddOptions<DiscordOptions>().BindConfiguration(DiscordOptions.SectionName);
 
         services.AddHostedService<Worker>()
+            .AddAutoMapper(typeof(AutoMapperProfile))
             .AddSingleton<DiscordBotClient>()
             .AddEventManagers()
             .AddDbContext<DbContext, DatabaseContext>()

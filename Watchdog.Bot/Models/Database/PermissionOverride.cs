@@ -3,7 +3,7 @@ using DSharpPlus;
 using Microsoft.EntityFrameworkCore;
 using Watchdog.Bot.Enums;
 
-namespace Watchdog.Bot.Models;
+namespace Watchdog.Bot.Models.Database;
 
 [PrimaryKey(nameof(GuildId), nameof(RestrictedAction))]
 public sealed class PermissionOverride : IEntity

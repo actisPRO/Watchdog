@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Watchdog.Bot.Models;
+namespace Watchdog.Bot.Models.Database;
 
 public sealed class Guild : IEntity
 {

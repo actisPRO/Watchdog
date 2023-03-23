@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Options;
 using Watchdog.Bot.Enums;
 using Watchdog.Bot.Models;
+using Watchdog.Bot.Models.Database;
 using Watchdog.Bot.Options;
 
 namespace Watchdog.Bot;

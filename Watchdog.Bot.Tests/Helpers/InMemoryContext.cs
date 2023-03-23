@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Watchdog.Bot.Tests.Repositories.Helpers;
+namespace Watchdog.Bot.Tests.Helpers;
 
 public sealed class InMemoryContext : DbContext
 {

@@ -24,4 +24,8 @@
       <ProjectReference Include="..\Watchdog.Bot\Watchdog.Bot.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Repositories\Helpers" />
+    </ItemGroup>
+
 </Project>

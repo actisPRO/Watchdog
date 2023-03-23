@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.EventArgs;
 using Watchdog.Bot.Extensions;
 using Watchdog.Bot.Services.Interfaces;

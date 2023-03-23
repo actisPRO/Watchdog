@@ -6,6 +6,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
-        return services.AddTransient<IGuildService, GuildService>();
+        return services.AddTransient<IParameterService, ParameterService>()
+            .AddTransient<IGuildService, GuildService>();
     }
 }

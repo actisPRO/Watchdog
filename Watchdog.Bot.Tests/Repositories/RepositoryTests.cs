@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Watchdog.Bot.Exceptions;
 using Watchdog.Bot.Repositories.Interfaces;
-using Watchdog.Bot.Tests.Repositories.Helpers;
+using Watchdog.Bot.Tests.Helpers;
 
 namespace Watchdog.Bot.Tests.Repositories;
 

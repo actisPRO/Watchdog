@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Watchdog.Bot.Models;
 
-namespace Watchdog.Bot.Tests.Repositories.Helpers;
+namespace Watchdog.Bot.Tests.Helpers;
 
 [PrimaryKey(nameof(Id), nameof(Name))]
 public sealed class SampleModel : IEntity
