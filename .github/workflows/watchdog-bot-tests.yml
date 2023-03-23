@@ -1,0 +1,48 @@
+name: Test Watchdog
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  test-watchdog:
+    runs-on:
+      ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Install Entity Framework tools
+      run: dotnet tool install --global dotnet-ef
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Update database
+      run: dotnet ef database update --project Watchdog.Bot
+    - name: Test
+      run: dotnet test --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
+    - name: Test Report
+      uses: dorny/test-reporter@v1
+      if: success() || failure()  
+      with:
+        name: 'Test results'
+        path: 'Sentinel.Tests/TestResults/*.trx'
+        reporter: 'dotnet-trx'
