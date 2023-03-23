@@ -8,6 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="DSharpPlus" Version="4.3.0" />
+        <PackageReference Include="DSharpPlus.SlashCommands" Version="4.3.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
           <PrivateAssets>all</PrivateAssets>
