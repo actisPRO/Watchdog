@@ -1,4 +1,5 @@
 using Watchdog.Bot;
+using Watchdog.Bot.Events;
 using Watchdog.Bot.Options;
 
 IHost host = Host.CreateDefaultBuilder(args)
@@ -9,10 +10,11 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddOptions<DatabaseOptions>().BindConfiguration(DatabaseOptions.SectionName);
-        services.AddOptions<DiscordOptions>().BindConfiguration(DatabaseOptions.SectionName);
-        
+        services.AddOptions<DiscordOptions>().BindConfiguration(DiscordOptions.SectionName);
+
         services.AddHostedService<Worker>()
             .AddSingleton<DiscordBotClient>()
+            .AddEventManagers()
             .AddDbContext<DatabaseContext>();
     })
     .Build();
