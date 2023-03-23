@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Watchdog.Bot;
 using Watchdog.Bot.Events;
 using Watchdog.Bot.Options;
@@ -16,7 +17,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.AddHostedService<Worker>()
             .AddSingleton<DiscordBotClient>()
             .AddEventManagers()
-            .AddDbContext<DatabaseContext>()
+            .AddDbContext<DbContext, DatabaseContext>()
             .AddRepositories();
     })
     .Build();
