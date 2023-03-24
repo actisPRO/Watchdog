@@ -19,7 +19,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
     {
         var entity = await Context.Set<TEntity>().FindAsync(identity);
         if (entity == null) return null;
-        
+
         Context.Entry(entity).State = EntityState.Detached;
         return entity;
     }
@@ -29,18 +29,29 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         return await Context.Set<TEntity>().CountAsync();
     }
 
-    public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, object>>? orderBy = null, bool ascending = true)
     {
-        return await Context.Set<TEntity>().AsNoTracking().ToListAsync();
+        var set = Context.Set<TEntity>().AsNoTracking();
+
+        if (orderBy != null)
+            set = ascending ? set.OrderBy(orderBy) : set.OrderByDescending(orderBy);
+
+        return await set.ToListAsync();
     }
 
-    public virtual async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+    public virtual async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate,
+        Expression<Func<TEntity, object>>? orderBy = null, bool ascending = true)
     {
-        return await Context.Set<TEntity>().AsNoTracking().Where(predicate).ToListAsync();
+        var set = Context.Set<TEntity>().AsNoTracking();
+        
+        if (orderBy != null)
+            set = ascending ? set.OrderBy(orderBy) : set.OrderByDescending(orderBy);
+
+        return await set.Where(predicate).ToListAsync();
     }
 
     public virtual async Task<TEntity> AddAsync(TEntity entity)
-    {        
+    {
         var createdEntity = await Context.Set<TEntity>().AddAsync(entity);
 
         try
@@ -52,7 +63,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         {
             if (await EntityExists(entity.GetIdentity()))
                 throw new ObjectExistsException("Entity already exists");
-            throw;            
+            throw;
         }
     }
 
