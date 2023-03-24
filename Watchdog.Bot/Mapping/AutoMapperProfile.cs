@@ -10,5 +10,8 @@ public class AutoMapperProfile : Profile
     {
         CreateMap(typeof(ParameterCreationData<>), typeof(Parameter))
             .ConvertUsing(typeof(ParameterCreationDataParameterConverter<>));
+        
+        CreateMap(typeof(GuildParameterCreationData<>), typeof(GuildParameter))
+            .ConvertUsing(typeof(GuildParameterCreationDataGuildParameterConverter<>));
     }
 }
