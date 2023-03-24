@@ -48,7 +48,6 @@ public sealed class ParameterServiceTests : DbBaseTest
     }
 
     [Test]
-    [NonTransactional]
     [TestCase("some text", "new text")]
     [TestCase(156, 200)]
     [TestCase(156.5f, 254f)]
