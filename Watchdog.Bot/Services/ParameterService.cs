@@ -90,7 +90,7 @@ public sealed class ParameterService : IParameterService
 
     private static void ThrowIfWrongType<T>(Parameter parameter) where T : IConvertible
     {
-        if (parameter.Type != typeof(T).ToString())
-            throw new InvalidCastException("Parameter type mismatch. Expected: " + typeof(T) + " but was: " + parameter.Type);
+        if (parameter.Type != typeof(T).Name)
+            throw new InvalidCastException("Parameter type mismatch. Expected: " + typeof(T).Name + " but was: " + parameter.Type);
     }
 }

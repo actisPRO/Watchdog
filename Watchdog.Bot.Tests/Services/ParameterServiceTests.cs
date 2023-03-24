@@ -5,7 +5,6 @@ using Watchdog.Bot.Repositories;
 using Watchdog.Bot.Repositories.Interfaces;
 using Watchdog.Bot.Services;
 using Watchdog.Bot.Services.Interfaces;
-using Watchdog.Bot.Tests.Helpers.Attributes;
 
 namespace Watchdog.Bot.Tests.Services;
 
@@ -13,12 +12,14 @@ public sealed class ParameterServiceTests : DbBaseTest
 {
     private IParameterService _parameterService = default!;
     private IParameterRepository _parameterRepository = default!;
+    private IGuildParameterRepository _guildParameterRepository = default!;
     
     [OneTimeSetUp]
     public void TestOneTimeSetUp()
     {
         _parameterRepository = new ParameterRepository(Context);
-        _parameterService = new ParameterService(CreateLogger<ParameterService>(), Mapper, _parameterRepository);
+        _guildParameterRepository = new GuildParameterRepository(Context);
+        _parameterService = new ParameterService(CreateLogger<ParameterService>(), Mapper, _parameterRepository, _guildParameterRepository);
     }
 
     [Test]
@@ -73,5 +74,55 @@ public sealed class ParameterServiceTests : DbBaseTest
         result!.Name.Should().Be(parameter.Name);
         result.Value.Should().Be(Convert.ToString(parameter.Value, CultureInfo.InvariantCulture));
         result.Type.Should().Be(typeof(T).Name);
+    }
+
+    [Test]
+    public async Task GetParameterAsync_And_Override_Test()
+    {
+        // Arrange
+        var parameter = new ParameterCreationData<ulong>()
+        {
+            Name = Guid.NewGuid().ToString(),
+            Value = 123
+        };
+        await _parameterService.RegisterParameterAsync(parameter);
+
+        var guild = await GuildGenerator.GenerateGuildAsync();
+        var guildParameter = new GuildParameterCreationData<ulong>()
+        {
+            Name = parameter.Name,
+            GuildId = guild.Id,
+            Value = 456
+        };
+        
+
+        // Act
+        await _parameterService.OverrideParameterValueAsync(guildParameter);
+        var actual = await _parameterService.GetGuildParameterValueAsync<ulong>(parameter.Name, guild.Id);
+        
+        // Assert
+        actual.Name.Should().Be(guildParameter.Name);
+        actual.Value.Should().Be(guildParameter.Value);
+        actual.DefaultValue.Should().Be(parameter.Value);
+    }
+
+    [Test]
+    public async Task GetParameterAsync_Default_Test()
+    {
+        // Arrange
+        var parameter = new ParameterCreationData<ulong>()
+        {
+            Name = Guid.NewGuid().ToString(),
+            Value = 123
+        };
+        await _parameterService.RegisterParameterAsync(parameter);
+        
+        // Act
+        var actual = await _parameterService.GetGuildParameterValueAsync<ulong>(parameter.Name, 123);
+        
+        // Assert
+        actual.Name.Should().Be(parameter.Name);
+        actual.Value.Should().Be(parameter.Value);
+        actual.DefaultValue.Should().Be(parameter.Value);
     }
 }
