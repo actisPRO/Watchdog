@@ -17,7 +17,11 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
 
     public virtual async Task<TEntity?> GetByIdAsync(params object[] identity)
     {
-        return await Context.Set<TEntity>().FindAsync(identity);
+        var entity = await Context.Set<TEntity>().FindAsync(identity);
+        if (entity == null) return null;
+        
+        Context.Entry(entity).State = EntityState.Detached;
+        return entity;
     }
 
     public virtual async Task<int> GetCountAsync()
@@ -27,12 +31,12 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
 
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
     {
-        return await Context.Set<TEntity>().ToListAsync();
+        return await Context.Set<TEntity>().AsNoTracking().ToListAsync();
     }
 
     public virtual async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
     {
-        return await Context.Set<TEntity>().Where(predicate).ToListAsync();
+        return await Context.Set<TEntity>().AsNoTracking().Where(predicate).ToListAsync();
     }
 
     public virtual async Task<TEntity> AddAsync(TEntity entity)
@@ -44,7 +48,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
             await Context.SaveChangesAsync();
             return createdEntity.Entity;
         }
-        catch
+        catch (DbUpdateConcurrencyException)
         {
             if (await EntityExists(entity.GetIdentity()))
                 throw new ObjectExistsException("Entity already exists");
@@ -60,7 +64,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         {
             await Context.SaveChangesAsync();
         }
-        catch
+        catch (DbUpdateConcurrencyException)
         {
             if (!await EntityExists(entity.GetIdentity()))
                 throw new ObjectNotFoundException("Entity not found");
@@ -80,6 +84,6 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
 
     protected async Task<bool> EntityExists(params object[] identity)
     {
-        return await Context.Set<TEntity>().FindAsync(identity) != null;
+        return await GetByIdAsync(identity) != null;
     }
 }

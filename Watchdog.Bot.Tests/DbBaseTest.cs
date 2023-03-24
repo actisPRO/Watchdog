@@ -5,7 +5,7 @@ using Watchdog.Bot.Tests.Helpers.Attributes;
 
 namespace Watchdog.Bot.Tests;
 
-public abstract class DbBaseTest
+public abstract class DbBaseTest : BaseTest
 {
     private DatabaseContext _context = default!;
     private IDbContextTransaction? _currentTransaction;
@@ -13,7 +13,7 @@ public abstract class DbBaseTest
     protected DatabaseContext Context => _context.ThrowIfNull();
     
     [OneTimeSetUp]
-    public void OneTimeSetUp()
+    public void DatabaseOneTimeSetUp()
     {
         var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") 
                                ?? "Server=localhost;Database=watchdog-tests;User Id=postgres;Password=postgres;";
@@ -24,16 +24,17 @@ public abstract class DbBaseTest
         });
         
         _context = new DatabaseContext(options);
+        _context.Database.EnsureCreated();
     }
     
     [OneTimeTearDown]
-    public void OneTimeTearDown()
+    public void DatabaseOneTimeTearDown()
     {
         Context.Dispose();
     }
     
     [SetUp]
-    public void SetUp()
+    public void DatabaseSetUp()
     {
         var currentType = GetType();
         var currentMethod = currentType.GetMethod(TestContext.CurrentContext.Test.MethodName ?? string.Empty)!;
@@ -48,7 +49,7 @@ public abstract class DbBaseTest
     }
     
     [TearDown]
-    public void TearDown()
+    public void DatabaseTearDown()
     {
         _currentTransaction?.Rollback();
         _currentTransaction?.Dispose();
