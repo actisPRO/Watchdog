@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Watchdog.Bot", "Watchdog.Bo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Watchdog.Bot.Tests", "Watchdog.Bot.Tests\Watchdog.Bot.Tests.csproj", "{1B08C7DF-33A4-4587-85C9-357C49F7E592}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{73604F26-4FED-4BD7-B720-04A6B7746247}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Watchdog.Tools.EventTypeGenerator", "Tools\Watchdog.Tools.EventTypeGenerator\Watchdog.Tools.EventTypeGenerator.csproj", "{DC36ED98-1C72-45E5-82E8-16ADD5CA0D44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,12 @@ Global
 		{1B08C7DF-33A4-4587-85C9-357C49F7E592}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B08C7DF-33A4-4587-85C9-357C49F7E592}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B08C7DF-33A4-4587-85C9-357C49F7E592}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC36ED98-1C72-45E5-82E8-16ADD5CA0D44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC36ED98-1C72-45E5-82E8-16ADD5CA0D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC36ED98-1C72-45E5-82E8-16ADD5CA0D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC36ED98-1C72-45E5-82E8-16ADD5CA0D44}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DC36ED98-1C72-45E5-82E8-16ADD5CA0D44} = {73604F26-4FED-4BD7-B720-04A6B7746247}
 	EndGlobalSection
 EndGlobal

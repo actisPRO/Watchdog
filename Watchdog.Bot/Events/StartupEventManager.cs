@@ -1,16 +1,14 @@
 ﻿using DSharpPlus;
 using DSharpPlus.EventArgs;
+using Watchdog.Bot.Attributes;
+using Watchdog.Bot.Enums;
 
 namespace Watchdog.Bot.Events;
 
-public sealed class StartupEventManager : IEventManager
+public sealed class StartupEventManager : BaseEventManager
 {
-    public void RegisterEvents(DiscordClient client)
-    {
-        client.Ready += SendMessageOnReady;    
-    }
-
-    private Task SendMessageOnReady(DiscordClient sender, ReadyEventArgs e)
+    [AsyncEventListener(EventType.Ready)]
+    public Task SendMessageOnReady(DiscordClient sender, ReadyEventArgs e)
     {
         sender.Logger.LogInformation("Discord client is ready");
         return Task.CompletedTask;

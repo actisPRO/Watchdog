@@ -1,11 +1,13 @@
 ﻿using DSharpPlus;
 using DSharpPlus.EventArgs;
+using Watchdog.Bot.Attributes;
+using Watchdog.Bot.Enums;
 using Watchdog.Bot.Extensions;
 using Watchdog.Bot.Services.Interfaces;
 
 namespace Watchdog.Bot.Events;
 
-public sealed class BasicGuildEventManager : IEventManager
+public sealed class BasicGuildEventManager : BaseEventManager
 {
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
@@ -13,13 +15,9 @@ public sealed class BasicGuildEventManager : IEventManager
     {
         _serviceScopeFactory = serviceScopeFactory;
     }
-
-    public void RegisterEvents(DiscordClient client)
-    {
-        client.GuildAvailable += RegisterGuildInDbAsync;
-    }
-
-    private async Task RegisterGuildInDbAsync(DiscordClient sender, GuildCreateEventArgs e)
+    
+    [AsyncEventListener(EventType.GuildAvailable)]
+    public async Task RegisterGuildInDbAsync(DiscordClient sender, GuildCreateEventArgs e)
     {
         await using var scope = _serviceScopeFactory.CreateAsyncScope();
         var guilds = scope.ServiceProvider.GetService<IGuildService>().ThrowIfNull();
