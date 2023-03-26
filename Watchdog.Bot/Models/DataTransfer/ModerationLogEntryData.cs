@@ -1,6 +1,6 @@
 ﻿using Watchdog.Bot.Enums;
 
-namespace Watchdog.Bot.Models.DataTransfer.Logging;
+namespace Watchdog.Bot.Models.DataTransfer;
 
 public sealed record ModerationLogEntryData
 {
