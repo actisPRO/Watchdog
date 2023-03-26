@@ -4,7 +4,7 @@ using Watchdog.Bot.Models.DataTransfer;
 
 namespace Watchdog.Bot.Mapping;
 
-public class AutoMapperProfile : Profile
+public sealed class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
@@ -13,5 +13,7 @@ public class AutoMapperProfile : Profile
         
         CreateMap(typeof(GuildParameterCreationData<>), typeof(GuildParameter))
             .ConvertUsing(typeof(GuildParameterCreationDataGuildParameterConverter<>));
+
+        CreateMap<ModerationLogEntryData, ModerationLogEntry>();
     }
 }
