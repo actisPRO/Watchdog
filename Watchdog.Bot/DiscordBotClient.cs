@@ -1,7 +1,7 @@
-﻿using DSharpPlus;
+using System.Reflection;
+using DSharpPlus;
 using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Options;
-using Watchdog.Bot.Commands;
 using Watchdog.Bot.Events;
 using Watchdog.Bot.Options;
 
@@ -14,21 +14,18 @@ public sealed class DiscordBotClient
     private readonly IServiceProvider _serviceProvider;
     private readonly ILoggerFactory _loggerFactory;
     private readonly IEnumerable<IEventManager> _eventManagers;
-    private readonly IEnumerable<ICommandHandler> _commandHandlers;
 
-    public DiscordBotClient(ILogger<DiscordBotClient> logger, 
-        IOptions<DiscordOptions> discordOptions, 
-        IServiceProvider serviceProvider, 
-        ILoggerFactory loggerFactory, 
-        IEnumerable<IEventManager> eventManagers, 
-        IEnumerable<ICommandHandler> commandHandlers)
+    public DiscordBotClient(ILogger<DiscordBotClient> logger,
+        IOptions<DiscordOptions> discordOptions,
+        IServiceProvider serviceProvider,
+        ILoggerFactory loggerFactory,
+        IEnumerable<IEventManager> eventManagers)
     {
         _logger = logger;
         _discordOptions = discordOptions.Value;
         _serviceProvider = serviceProvider;
         _loggerFactory = loggerFactory;
         _eventManagers = eventManagers;
-        _commandHandlers = commandHandlers;
     }
 
     public async Task ExecuteAsync()
@@ -49,11 +46,12 @@ public sealed class DiscordBotClient
         ulong? debugGuildId = null;
         if (_discordOptions.Debug && _discordOptions.DebugGuild != null)
             debugGuildId = _discordOptions.DebugGuild.Value;
-        
+
         foreach (var eventManager in _eventManagers)
             eventManager.RegisterEvents(discordClient);
-        foreach (var commandHandler in _commandHandlers)
-            slashCommands.RegisterCommands(commandHandler.GetType(), debugGuildId);
+
+        // Регистрация команд
+        slashCommands.RegisterCommands(Assembly.GetExecutingAssembly());
 
         await discordClient.ConnectAsync();
     }
