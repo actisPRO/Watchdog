@@ -16,12 +16,12 @@ namespace Watchdog.Bot.Services;
 
 public sealed class LoggingService : ILoggingService
 {
-    private readonly ILogger<GuildService> _logger;
+    private readonly ILogger<LoggingService> _logger;
     private readonly IMapper _mapper;
     private readonly ILogRepository _logRepository;
     private readonly IParameterService _parameterService;
 
-    public LoggingService(ILogger<GuildService> logger, IMapper mapper, ILogRepository logRepository,
+    public LoggingService(ILogger<LoggingService> logger, IMapper mapper, ILogRepository logRepository,
         IParameterService parameterService)
     {
         _logger = logger;
