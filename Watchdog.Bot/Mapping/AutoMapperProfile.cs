@@ -14,6 +14,9 @@ public sealed class AutoMapperProfile : Profile
         CreateMap(typeof(GuildParameterCreationData<>), typeof(GuildParameter))
             .ConvertUsing(typeof(GuildParameterCreationDataGuildParameterConverter<>));
 
-        CreateMap<ModerationLogEntryData, ModerationLogEntry>();
+        CreateMap<LogEntry, ModerationLogEntry>()
+            .ForMember(x => x.GuildId, opt => opt.MapFrom(x => x.Guild.Id))
+            .ForMember(x => x.ExecutorId, opt => opt.MapFrom(x => x.Executor.Id))
+            .ForMember(x => x.TargetId, opt => opt.MapFrom(x => x.Target.Id));
     }
 }
