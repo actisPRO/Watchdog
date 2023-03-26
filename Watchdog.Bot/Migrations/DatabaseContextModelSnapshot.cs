@@ -37,7 +37,7 @@ namespace Watchdog.Bot.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Guilds");
+                    b.ToTable("Guilds", (string)null);
                 });
 
             modelBuilder.Entity("Watchdog.Bot.Models.GuildParameter", b =>
@@ -56,7 +56,7 @@ namespace Watchdog.Bot.Migrations
 
                     b.HasIndex("GuildId");
 
-                    b.ToTable("GuildParameters");
+                    b.ToTable("GuildParameters", (string)null);
                 });
 
             modelBuilder.Entity("Watchdog.Bot.Models.Parameter", b =>
@@ -74,7 +74,7 @@ namespace Watchdog.Bot.Migrations
 
                     b.HasKey("Name");
 
-                    b.ToTable("Parameters");
+                    b.ToTable("Parameters", (string)null);
                 });
 
             modelBuilder.Entity("Watchdog.Bot.Models.Permission", b =>
@@ -87,7 +87,7 @@ namespace Watchdog.Bot.Migrations
 
                     b.HasKey("RestrictedAction");
 
-                    b.ToTable("Permissions");
+                    b.ToTable("Permissions", (string)null);
                 });
 
             modelBuilder.Entity("Watchdog.Bot.Models.PermissionOverride", b =>
@@ -105,7 +105,7 @@ namespace Watchdog.Bot.Migrations
 
                     b.HasIndex("RestrictedAction");
 
-                    b.ToTable("PermissionOverrides");
+                    b.ToTable("PermissionOverrides", (string)null);
                 });
 
             modelBuilder.Entity("Watchdog.Bot.Models.GuildParameter", b =>
