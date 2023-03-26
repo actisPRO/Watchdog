@@ -2,6 +2,7 @@
 using Watchdog.Bot.Extensions;
 using Watchdog.Bot.Options;
 using Watchdog.Bot.Tests.Helpers.Attributes;
+using Watchdog.Bot.Tests.Helpers.Generators;
 
 namespace Watchdog.Bot.Tests;
 
@@ -11,6 +12,8 @@ public abstract class DbBaseTest : BaseTest
     private IDbContextTransaction? _currentTransaction;
     
     protected DatabaseContext Context => _context.ThrowIfNull();
+
+    protected GuildGenerator GuildGenerator { get; private set; } = default!;
     
     [OneTimeSetUp]
     public void DatabaseOneTimeSetUp()
@@ -25,6 +28,8 @@ public abstract class DbBaseTest : BaseTest
         
         _context = new DatabaseContext(options);
         _context.Database.EnsureCreated();
+
+        GuildGenerator = new GuildGenerator(_context);
     }
     
     [OneTimeTearDown]
