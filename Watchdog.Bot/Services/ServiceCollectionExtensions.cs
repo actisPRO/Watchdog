@@ -7,6 +7,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         return services.AddTransient<IParameterService, ParameterService>()
-            .AddTransient<IGuildService, GuildService>();
+            .AddTransient<IGuildService, GuildService>()
+            .AddTransient<ILoggingService, LoggingService>();
     }
 }

@@ -15,8 +15,7 @@ public sealed class DatabaseContext : DbContext
     private DbSet<Guild> Guilds { get; set; } = default!;
     private DbSet<Parameter> Parameters { get; set; } = default!;
     private DbSet<GuildParameter> GuildParameters { get; set; } = default!;
-    private DbSet<Permission> Permissions { get; set; } = default!;
-    private DbSet<PermissionOverride> PermissionOverrides { get; set; } = default!;
+    private DbSet<ModerationLogEntry> ModerationLog { get; set; } = default!;
 
     public DatabaseContext(IOptions<DatabaseOptions> databaseOptions)
     {
@@ -25,9 +24,9 @@ public sealed class DatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Permission>()
-            .Property(x => x.RestrictedAction)
-            .HasConversion(x => x.ToString(), x => Enum.Parse<RestrictedAction>(x));
+        modelBuilder.Entity<ModerationLogEntry>()
+            .Property(x => x.Action)
+            .HasConversion(x => x.ToString(), x => Enum.Parse<ModerationAction>(x));
         
         modelBuilder.Entity<Guild>()
             .Property(x => x.DatabaseEntryCreatedAt)
