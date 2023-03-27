@@ -28,13 +28,14 @@ public abstract class DbBaseTest : BaseTest
         
         _context = new DatabaseContext(options);
         _context.Database.EnsureCreated();
-
+        
         GuildGenerator = new GuildGenerator(_context);
     }
     
     [OneTimeTearDown]
     public void DatabaseOneTimeTearDown()
     {
+        _context.Database.EnsureDeleted();
         Context.Dispose();
     }
     
