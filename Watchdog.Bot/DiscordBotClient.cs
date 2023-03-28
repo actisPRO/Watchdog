@@ -30,11 +30,11 @@ public sealed class DiscordBotClient
 
     public async Task ExecuteAsync()
     {
-        var discordClient = new DiscordClient(new ()
+        var discordClient = new DiscordClient(new()
         {
             Token = _discordOptions.Token,
             TokenType = TokenType.Bot,
-            Intents = DiscordIntents.AllUnprivileged,
+            Intents = DiscordIntents.All,
             LoggerFactory = _loggerFactory
         });
 
