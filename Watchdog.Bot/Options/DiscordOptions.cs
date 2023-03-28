@@ -7,4 +7,5 @@ public sealed record DiscordOptions
     public required string Token { get; init; }
     public bool Debug { get; set; } = false;
     public ulong? DebugGuild { get; set; }
+    public ulong MessageLogsChannelId { get; set; }
 }
