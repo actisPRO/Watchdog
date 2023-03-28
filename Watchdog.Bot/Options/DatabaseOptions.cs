@@ -5,4 +5,6 @@ public sealed record DatabaseOptions
     public const string SectionName = "Database";
     
     public required string ConnectionString { get; init; }
+
+    public bool EnableSensitiveDataLogging { get; set; } = false;
 }

@@ -38,5 +38,7 @@ public sealed class DatabaseContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(_databaseOptions.ConnectionString);
+        if (_databaseOptions.EnableSensitiveDataLogging)
+            optionsBuilder.EnableSensitiveDataLogging();
     }
 }
