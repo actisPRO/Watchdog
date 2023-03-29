@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Watchdog.Bot;
 using Watchdog.Bot.Events;
-using Watchdog.Bot.Listeners;
 using Watchdog.Bot.Mapping;
 using Watchdog.Bot.Options;
 using Watchdog.Bot.Repositories;
