@@ -20,7 +20,7 @@ public sealed class MessageEventManager : BaseEventManager
     {
         // Don't log messages from bots
         // Author can be null if bot
-        if (args.Message.Author?.IsBot == null || args.Message.Author.IsBot) return;
+        if (args.Message.Author == null || args.Message.Author.IsBot) return;
         
         await using var scope = _serviceScopeFactory.CreateAsyncScope();
         var parameterService = scope.ServiceProvider.GetRequiredService<IParameterService>();
@@ -35,7 +35,7 @@ public sealed class MessageEventManager : BaseEventManager
     {
         // Don't log messages from bots
         // Author can be null if bot
-        if (args.Message.Author?.IsBot == null || args.Message.Author.IsBot) return;
+        if (args.Message.Author == null || args.Message.Author.IsBot) return;
         
         await using var scope = _serviceScopeFactory.CreateAsyncScope();
         var parameterService = scope.ServiceProvider.GetRequiredService<IParameterService>();
