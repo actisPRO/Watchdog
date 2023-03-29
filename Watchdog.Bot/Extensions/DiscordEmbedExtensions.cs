@@ -8,10 +8,10 @@ public static class DiscordEmbedExtensions
     /// Add three fields.
     /// Made for message logging.
     /// </summary>
-    public static DiscordEmbedBuilder AddTagretFields(this DiscordEmbedBuilder embed, DiscordUser author, DiscordChannel channel, DiscordAuditLogMessageEntry? deleteLog)
+    public static DiscordEmbedBuilder AddTagretFields(this DiscordEmbedBuilder embed, DiscordUser? author, DiscordChannel channel, DiscordAuditLogMessageEntry? deleteLog)
     {
-        embed.AddField("**Автор**", $"**{author.Username}#{author.Discriminator}** ({author.Mention})", true);
-        embed.AddField("**Удалил**", $"**{deleteLog?.UserResponsible.Username ?? author.Username}#{deleteLog?.UserResponsible.Discriminator ?? author.Discriminator}** ({deleteLog?.UserResponsible.Mention ?? author.Mention})", true);
+        embed.AddField("**Автор**", author == null ? "**Неизвестно**" : $"**{author.Username}#{author.Discriminator}** ({author.Mention})", true);
+        embed.AddField("**Удалил**", $"**{deleteLog?.UserResponsible.Username ?? author?.Username}#{deleteLog?.UserResponsible.Discriminator ?? author?.Discriminator}** ({deleteLog?.UserResponsible.Mention ?? author?.Mention})", true);
         embed.AddField("**Канал**", $"**{channel.Name}** ({channel.Mention})", true);
         return embed;
     }

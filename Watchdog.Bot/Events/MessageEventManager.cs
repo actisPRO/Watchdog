@@ -16,41 +16,43 @@ public sealed class MessageEventManager : BaseEventManager
     }
 
     [AsyncEventListener(EventType.MessageDeleted)]
-    public async Task ClientOnMessageDeleteReceived(DiscordClient client, MessageDeleteEventArgs args)
+    public async Task ClientOnMessageDeleteReceivedAsync(DiscordClient client, MessageDeleteEventArgs args)
     {
         // Don't log messages from bots
-        if (args.Message.Author.IsBot) return;
+        // Author can be null if bot
+        if (args.Message.Author?.IsBot == null || args.Message.Author.IsBot) return;
         
         await using var scope = _serviceScopeFactory.CreateAsyncScope();
         var parameterService = scope.ServiceProvider.GetRequiredService<IParameterService>();
         var messageLogService = scope.ServiceProvider.GetRequiredService<IMessageLogService>();
         
         var messageLogsChannelId = (await parameterService.GetGuildParameterValueAsync<ulong>("messages_log_channel_id", args.Guild.Id)).Value;
-        await messageLogService.LogDeletedMessage(args.Guild, args.Message, messageLogsChannelId);
+        await messageLogService.LogDeletedMessageAsync(args.Guild, args.Message, messageLogsChannelId);
     }
     
     [AsyncEventListener(EventType.MessageUpdated)]
-    public async Task ClientOnMessageUpdateReceived(DiscordClient client, MessageUpdateEventArgs args)
+    public async Task ClientOnMessageUpdateReceivedAsync(DiscordClient client, MessageUpdateEventArgs args)
     {
         // Don't log messages from bots
-        if (args.Message.Author.IsBot) return;
+        // Author can be null if bot
+        if (args.Message.Author?.IsBot == null || args.Message.Author.IsBot) return;
         
         await using var scope = _serviceScopeFactory.CreateAsyncScope();
         var parameterService = scope.ServiceProvider.GetRequiredService<IParameterService>();
         var messageLogService = scope.ServiceProvider.GetRequiredService<IMessageLogService>();
         
         var messageLogsChannelId = (await parameterService.GetGuildParameterValueAsync<ulong>("messages_log_channel_id", args.Guild.Id)).Value;
-        await messageLogService.LogUpdatedMessage(args.Guild, args.MessageBefore, args.Message, messageLogsChannelId);
+        await messageLogService.LogUpdatedMessageAsync(args.Guild, args.MessageBefore, args.Message, messageLogsChannelId);
     }
 
     [AsyncEventListener(EventType.MessagesBulkDeleted)]
-    public async Task ClientOnMessagesBulkDeleteReceived(DiscordClient client, MessageBulkDeleteEventArgs args)
+    public async Task ClientOnMessagesBulkDeleteReceivedAsync(DiscordClient client, MessageBulkDeleteEventArgs args)
     {
         await using var scope = _serviceScopeFactory.CreateAsyncScope();
         var parameterService = scope.ServiceProvider.GetRequiredService<IParameterService>();
         var messageLogService = scope.ServiceProvider.GetRequiredService<IMessageLogService>();
         
         var messageLogsChannelId = (await parameterService.GetGuildParameterValueAsync<ulong>("messages_log_channel_id", args.Guild.Id)).Value;
-        await messageLogService.LogBulkDeletedMessages(args.Guild, args.Messages, messageLogsChannelId);
+        await messageLogService.LogBulkDeletedMessagesAsync(args.Guild, args.Messages, messageLogsChannelId);
     }
 }
