@@ -6,7 +6,7 @@ using Watchdog.Bot.Services.Interfaces;
 
 namespace Watchdog.Bot.Events;
 
-public class MessageEventManager : BaseEventManager
+public sealed class MessageEventManager : BaseEventManager
 {
     private readonly IServiceScopeFactory _serviceScopeFactory;
     
@@ -26,7 +26,7 @@ public class MessageEventManager : BaseEventManager
         var messageLogService = scope.ServiceProvider.GetRequiredService<IMessageLogService>();
         
         var messageLogsChannelId = (await parameterService.GetGuildParameterValueAsync<ulong>("messages_log_channel_id", args.Guild.Id)).Value;
-        await messageLogService.ClientOnMessageDeleteReceived(client, args.Guild, args.Message, messageLogsChannelId);
+        await messageLogService.LogDeletedMessage(args.Guild, args.Message, messageLogsChannelId);
     }
     
     [AsyncEventListener(EventType.MessageUpdated)]
@@ -40,7 +40,7 @@ public class MessageEventManager : BaseEventManager
         var messageLogService = scope.ServiceProvider.GetRequiredService<IMessageLogService>();
         
         var messageLogsChannelId = (await parameterService.GetGuildParameterValueAsync<ulong>("messages_log_channel_id", args.Guild.Id)).Value;
-        await messageLogService.ClientOnMessageUpdateReceived(client, args.Guild, args.MessageBefore, args.Message, messageLogsChannelId);
+        await messageLogService.LogUpdatedMessage(args.Guild, args.MessageBefore, args.Message, messageLogsChannelId);
     }
 
     [AsyncEventListener(EventType.MessagesBulkDeleted)]
@@ -51,6 +51,6 @@ public class MessageEventManager : BaseEventManager
         var messageLogService = scope.ServiceProvider.GetRequiredService<IMessageLogService>();
         
         var messageLogsChannelId = (await parameterService.GetGuildParameterValueAsync<ulong>("messages_log_channel_id", args.Guild.Id)).Value;
-        await messageLogService.ClientOnMessagesBulkDeleteReceived(client, args.Guild, args.Messages, messageLogsChannelId);
+        await messageLogService.LogBulkDeletedMessages(args.Guild, args.Messages, messageLogsChannelId);
     }
 }
