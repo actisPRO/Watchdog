@@ -30,14 +30,15 @@ public sealed class DiscordBotClient
 
     public async Task ExecuteAsync()
     {
-        var discordClient = new DiscordClient(new ()
+        var discordClient = new DiscordClient(new()
         {
             Token = _discordOptions.Token,
             TokenType = TokenType.Bot,
-            Intents = DiscordIntents.AllUnprivileged,
-            LoggerFactory = _loggerFactory
+            Intents = DiscordIntents.All,
+            LoggerFactory = _loggerFactory,
+            LogUnknownEvents = false, // GUILD_AUDIT_LOG_ENTRY_CREATE unknown event in D#+
         });
-
+        
         var slashCommands = discordClient.UseSlashCommands(new()
         {
             Services = _serviceProvider

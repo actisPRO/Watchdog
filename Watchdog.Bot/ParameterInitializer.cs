@@ -31,6 +31,12 @@ public sealed class ParameterInitializer
             Value = 0
         });
         
+        await parameterService.RegisterParameterAsync<ulong>(new()
+        {
+            Name = ParameterNames.MessagesLogChannelId,
+            Value = 0
+        });
+        
         stopwatch.Stop();
         _logger.LogInformation("Finished parameter initialization in {ElapsedMilliseconds} ms", 
             stopwatch.ElapsedMilliseconds);

@@ -20,28 +20,38 @@ public abstract class BaseEventManager : IEventManager
             Register(client, listener.Method, listener.Attribute.Event);
     }
     
-    private async Task OnClientEventTask(MethodInfo listener, DiscordClient sender, object eventArgs)
+    private Task OnClientEventTask(MethodInfo listener, DiscordClient sender, object eventArgs)
     {
-        try
+        _ = Task.Run(async () =>
         {
-            await (Task)listener.Invoke(this, new [] { sender, eventArgs })!;
-        }
-        catch (Exception e)
-        {
-            sender.Logger.LogError(e, $"Uncaught exception in the listener thread");
-        }
+            try
+            {
+                await (Task)listener.Invoke(this, new[] { sender, eventArgs })!;
+            }
+            catch (Exception e)
+            {
+                sender.Logger.LogError(e, $"Uncaught exception in the listener thread");
+            }
+        });
+
+        return Task.CompletedTask;
     }
 
-    private async Task OnCommandEventTask(MethodInfo listener, SlashCommandsExtension sender, object eventArgs)
+    private Task OnCommandEventTask(MethodInfo listener, SlashCommandsExtension sender, object eventArgs)
     {
-        try
+        _ = Task.Run(async () =>
         {
-            await (Task)listener.Invoke(this, new [] { sender, eventArgs })!;
-        }
-        catch (Exception e)
-        {
-            sender.Client.Logger.LogError(e, $"Uncaught exception in the listener thread");
-        }
+            try
+            {
+                await (Task)listener.Invoke(this, new[] { sender, eventArgs })!;
+            }
+            catch (Exception e)
+            {
+                sender.Client.Logger.LogError(e, $"Uncaught exception in the listener thread");
+            }
+        });
+
+        return Task.CompletedTask;
     }
 
     private void Register(DiscordClient client, MethodInfo listener, EventType eventType)

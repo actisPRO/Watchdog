@@ -8,6 +8,7 @@ public static class ServiceCollectionExtensions
     {
         return services.AddTransient<IParameterService, ParameterService>()
             .AddTransient<IGuildService, GuildService>()
+            .AddTransient<IMessageLogService, MessageLogService>()
             .AddTransient<ILoggingService, LoggingService>();
     }
 }

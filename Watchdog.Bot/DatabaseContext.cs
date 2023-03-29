@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Options;
 using Watchdog.Bot.Enums;
-using Watchdog.Bot.Models;
 using Watchdog.Bot.Models.Database;
 using Watchdog.Bot.Options;
 
@@ -37,5 +36,7 @@ public sealed class DatabaseContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(_databaseOptions.ConnectionString);
+        if (_databaseOptions.EnableSensitiveDataLogging)
+            optionsBuilder.EnableSensitiveDataLogging();
     }
 }
