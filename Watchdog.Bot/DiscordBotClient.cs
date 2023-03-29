@@ -35,9 +35,10 @@ public sealed class DiscordBotClient
             Token = _discordOptions.Token,
             TokenType = TokenType.Bot,
             Intents = DiscordIntents.All,
-            LoggerFactory = _loggerFactory
+            LoggerFactory = _loggerFactory,
+            LogUnknownEvents = false, // GUILD_AUDIT_LOG_ENTRY_CREATE unknown event in D#+
         });
-
+        
         var slashCommands = discordClient.UseSlashCommands(new()
         {
             Services = _serviceProvider
