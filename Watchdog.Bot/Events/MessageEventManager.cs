@@ -20,7 +20,7 @@ public sealed class MessageEventManager : BaseEventManager
     {
         // Don't log messages from bots
         // Author can be null if bot
-        if (args.Message.Author == null || args.Message.Author.IsBot) return;
+        if (args?.Message?.Author == null || args.Message.Author.IsBot) return;
         
         await using var scope = _serviceScopeFactory.CreateAsyncScope();
         var parameterService = scope.ServiceProvider.GetRequiredService<IParameterService>();
@@ -35,7 +35,11 @@ public sealed class MessageEventManager : BaseEventManager
     {
         // Don't log messages from bots
         // Author can be null if bot
-        if (args.Message.Author == null || args.Message.Author.IsBot) return;
+        // MessageBefore can be null
+        if (args.MessageBefore == null || args.Message == null ||
+            args.Message.Author == null || args.MessageBefore.Author == null || 
+            args.MessageBefore.Content == args.Message.Content || 
+            args.Message.Author.IsBot) return;
         
         await using var scope = _serviceScopeFactory.CreateAsyncScope();
         var parameterService = scope.ServiceProvider.GetRequiredService<IParameterService>();
@@ -48,6 +52,8 @@ public sealed class MessageEventManager : BaseEventManager
     [AsyncEventListener(EventType.MessagesBulkDeleted)]
     public async Task ClientOnMessagesBulkDeleteReceivedAsync(DiscordClient client, MessageBulkDeleteEventArgs args)
     {
+        if (args?.Messages == null) return;
+
         await using var scope = _serviceScopeFactory.CreateAsyncScope();
         var parameterService = scope.ServiceProvider.GetRequiredService<IParameterService>();
         var messageLogService = scope.ServiceProvider.GetRequiredService<IMessageLogService>();
