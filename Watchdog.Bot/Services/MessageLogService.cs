@@ -6,28 +6,12 @@ using Watchdog.Bot.Services.Interfaces;
 
 namespace Watchdog.Bot.Services;
 
-public class MessageLogService : IMessageLogService
+public sealed class MessageLogService : IMessageLogService
 {
-    private readonly IServiceScopeFactory _serviceScopeFactory;
-    
-    public MessageLogService(IServiceScopeFactory serviceScopeFactory)
+    public async Task LogDeletedMessage(DiscordGuild guild, DiscordMessage message, ulong messageLogsChannelId)
     {
-        _serviceScopeFactory = serviceScopeFactory;
-    }
-    
-    public async Task ClientOnMessageDeleteReceived(DiscordClient client, DiscordGuild guild, DiscordMessage message, ulong messageLogsChannelId)
-    {
-        DiscordChannel messageLogChannel;
-        
-        try 
-        {
-            messageLogChannel = guild.GetChannel(messageLogsChannelId);
-        }
-        catch (Exception)
-        {
-            // logs channel was not found. Ignore
-            return;
-        }
+        var messageLogChannel = guild.GetChannel(messageLogsChannelId);
+        if (messageLogChannel == null) return; // If channel doesn't exist - return
 
         var deleteLog = (await guild.GetAuditLogsAsync(action_type: AuditLogActionType.MessageDelete)).OfType<DiscordAuditLogMessageEntry?>().FirstOrDefault(x => x != null && x.Target.Id == message.Author.Id);
 
@@ -45,55 +29,53 @@ public class MessageLogService : IMessageLogService
 
         if (message.Attachments.Count != 0)
         {
-            int attachmentCount = 1;
-            
-            foreach (var attachment in message.Attachments)
-            {
-                using HttpClient httpClient = new();
-                var memoryStream = await httpClient.GetStreamAsync(attachment.Url);
-
-                logMessage.AddFile($"image{attachmentCount}.png", memoryStream);
-
-                var attachmentEmbed = new DiscordEmbedBuilder()
-                    .WithDescription($"**Вложение #{attachmentCount}**")
-                    .WithImageUrl($"attachment://image{attachmentCount}.png")
-                    .WithColor(new DiscordColor("ff6d96"));
-                
-                // Need to define author if user send 10 images because message can't have more than 10 embeds
-                if (message.Attachments.Count == 10 && attachmentCount == 1)
-                {
-                    attachmentEmbed.AddTagretFields(message.Author, message.Channel, deleteLog);
-                    
-                    await messageLogChannel.SendMessageAsync(new DiscordMessageBuilder().AddEmbed(embed));
-                    embeds.Clear();
-                    embeds.Add(attachmentEmbed);
-                }
-                else
-                {
-                    embeds.Add(attachmentEmbed);
-                }
-
-                attachmentCount++;
-            }
+            await messageLogChannel.SendMessageAsync(new DiscordMessageBuilder().AddEmbed(embed));
+            embeds = await BuildLogAttachmentEmbeds(logMessage, message, deleteLog);
         }
         
         logMessage.AddEmbeds(embeds);
         await messageLogChannel.SendMessageAsync(logMessage);
     }
 
-    public async Task ClientOnMessageUpdateReceived(DiscordClient client, DiscordGuild guild, DiscordMessage message, DiscordMessage messageAfter, ulong messageLogsChannelId)
+    private static async Task<List<DiscordEmbed>> BuildLogAttachmentEmbeds(DiscordMessageBuilder logMessage, DiscordMessage message, DiscordAuditLogMessageEntry? deleteLog)
     {
-        DiscordChannel messageLogChannel;
-        
-        try
+        List<DiscordEmbed> embeds = new();
+        int attachmentCount = 1;
+            
+        foreach (var attachment in message.Attachments)
         {
-            messageLogChannel = guild.GetChannel(messageLogsChannelId);
+            using HttpClient httpClient = new();
+            var memoryStream = await httpClient.GetStreamAsync(attachment.Url);
+
+            logMessage.AddFile($"image{attachmentCount}.png", memoryStream);
+
+            var attachmentEmbed = new DiscordEmbedBuilder()
+                .WithDescription($"**Вложение #{attachmentCount}**")
+                .WithImageUrl($"attachment://image{attachmentCount}.png")
+                .WithColor(new DiscordColor("ff6d96"));
+                
+            // Need to define author if user send 10 images because message can't have more than 10 embeds
+            if (message.Attachments.Count == 10 && attachmentCount == 1)
+            {
+                attachmentEmbed.AddTagretFields(message.Author, message.Channel, deleteLog);
+                embeds.Clear();
+                embeds.Add(attachmentEmbed);
+            }
+            else
+            {
+                embeds.Add(attachmentEmbed);
+            }
+
+            attachmentCount++;
         }
-        catch (Exception)
-        {
-            // logs channel was not found. Ignore
-            return;
-        }
+
+        return embeds;
+    }
+
+    public async Task LogUpdatedMessage(DiscordGuild guild, DiscordMessage message, DiscordMessage messageAfter, ulong messageLogsChannelId)
+    {
+        var messageLogChannel = guild.GetChannel(messageLogsChannelId);
+        if (messageLogChannel == null) return; // If channel doesn't exist - return
 
         var logMessage = new DiscordMessageBuilder()
             .AddEmbed(new DiscordEmbedBuilder()
@@ -109,19 +91,10 @@ public class MessageLogService : IMessageLogService
         await messageLogChannel.SendMessageAsync(logMessage);
     }
 
-    public async Task ClientOnMessagesBulkDeleteReceived(DiscordClient client, DiscordGuild guild, IReadOnlyList<DiscordMessage> messages, ulong messageLogsChannelId)
+    public async Task LogBulkDeletedMessages(DiscordGuild guild, IReadOnlyList<DiscordMessage> messages, ulong messageLogsChannelId)
     {
-        DiscordChannel messageLogChannel;
-        
-        try
-        {
-            messageLogChannel = guild.GetChannel(messageLogsChannelId);
-        }
-        catch (Exception)
-        {
-            // logs channel was not found. Ignore
-            return;
-        }
+        var messageLogChannel = guild.GetChannel(messageLogsChannelId);
+        if (messageLogChannel == null) return; // If channel doesn't exist - return
         
         var deleteLog = (await guild.GetAuditLogsAsync(action_type: AuditLogActionType.MessageBulkDelete)).OfType<DiscordAuditLogMessageEntry?>().FirstOrDefault();
 
