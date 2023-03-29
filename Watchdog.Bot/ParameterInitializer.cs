@@ -36,7 +36,7 @@ public sealed class ParameterInitializer
             Name = ParameterNames.MessagesLogChannelId,
             Value = 0
         });
-
+        
         stopwatch.Stop();
         _logger.LogInformation("Finished parameter initialization in {ElapsedMilliseconds} ms", 
             stopwatch.ElapsedMilliseconds);
