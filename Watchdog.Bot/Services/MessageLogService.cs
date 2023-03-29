@@ -8,7 +8,7 @@ namespace Watchdog.Bot.Services;
 
 public sealed class MessageLogService : IMessageLogService
 {
-    public async Task LogDeletedMessage(DiscordGuild guild, DiscordMessage message, ulong messageLogsChannelId)
+    public async Task LogDeletedMessageAsync(DiscordGuild guild, DiscordMessage message, ulong messageLogsChannelId)
     {
         var messageLogChannel = guild.GetChannel(messageLogsChannelId);
         if (messageLogChannel == null) return; // If channel doesn't exist - return
@@ -72,7 +72,7 @@ public sealed class MessageLogService : IMessageLogService
         return embeds;
     }
 
-    public async Task LogUpdatedMessage(DiscordGuild guild, DiscordMessage message, DiscordMessage messageAfter, ulong messageLogsChannelId)
+    public async Task LogUpdatedMessageAsync(DiscordGuild guild, DiscordMessage message, DiscordMessage messageAfter, ulong messageLogsChannelId)
     {
         var messageLogChannel = guild.GetChannel(messageLogsChannelId);
         if (messageLogChannel == null) return; // If channel doesn't exist - return
@@ -91,7 +91,7 @@ public sealed class MessageLogService : IMessageLogService
         await messageLogChannel.SendMessageAsync(logMessage);
     }
 
-    public async Task LogBulkDeletedMessages(DiscordGuild guild, IReadOnlyList<DiscordMessage> messages, ulong messageLogsChannelId)
+    public async Task LogBulkDeletedMessagesAsync(DiscordGuild guild, IReadOnlyList<DiscordMessage> messages, ulong messageLogsChannelId)
     {
         var messageLogChannel = guild.GetChannel(messageLogsChannelId);
         if (messageLogChannel == null) return; // If channel doesn't exist - return
