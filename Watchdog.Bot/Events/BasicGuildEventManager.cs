@@ -23,4 +23,12 @@ public sealed class BasicGuildEventManager : BaseEventManager
         var guilds = scope.ServiceProvider.GetService<IGuildService>().ThrowIfNull();
         await guilds.CreateOrUpdateGuildAsync(e.Guild);
     }
+    
+    [AsyncEventListener(EventType.GuildCreated)]
+    public async Task ClientOnGuildCreatedReceivedAsync(DiscordClient sender, GuildCreateEventArgs e)
+    {
+        await using var scope = _serviceScopeFactory.CreateAsyncScope();
+        var botStatusService = scope.ServiceProvider.GetService<IBotStatus>().ThrowIfNull();
+        await botStatusService.UpdateBotStatusAsync(sender);
+    }
 }
