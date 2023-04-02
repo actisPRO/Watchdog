@@ -72,7 +72,7 @@ public sealed class MessageLogService : IMessageLogService
         return embeds;
     }
 
-    public async Task LogUpdatedMessageAsync(DiscordGuild guild, DiscordMessage message, DiscordMessage messageAfter, ulong messageLogsChannelId)
+    public async Task LogUpdatedMessageAsync(DiscordGuild guild, DiscordMessage messageBefore, DiscordMessage message, ulong messageLogsChannelId)
     {
         var messageLogChannel = guild.GetChannel(messageLogsChannelId);
         if (messageLogChannel == null) return; // If channel doesn't exist - return
@@ -80,12 +80,12 @@ public sealed class MessageLogService : IMessageLogService
         var logMessage = new DiscordMessageBuilder()
             .AddEmbed(new DiscordEmbedBuilder()
                 .WithTimestamp(DateTime.Now)
-                .WithDescription($"[**Сообщение**]({messageAfter.JumpLink}) было отредактировано")
-                .AddField("**Старое содержимое:**", $"```{message.Content}```")
-                .AddField("**Новое содержимое:**", $"```{messageAfter.Content}```")
-                .AddField("**Автор**", $"{messageAfter.Author.Username}#{messageAfter.Author.Discriminator} ({messageAfter.Author.Mention})", true)
-                .AddField("**Канал**", $"{messageAfter.Channel.Name} ({messageAfter.Channel.Mention})", true)
-                .WithFooter($"Id сообщения: {messageAfter.Id}")
+                .WithDescription($"[**Сообщение**]({message.JumpLink}) было отредактировано")
+                .AddField("**Старое содержимое:**", $"```{messageBefore.Content}```")
+                .AddField("**Новое содержимое:**", $"```{message.Content}```")
+                .AddField("**Автор**", $"{message.Author.Username}#{message.Author.Discriminator} ({message.Author.Mention})", true)
+                .AddField("**Канал**", $"{message.Channel.Name} ({message.Channel.Mention})", true)
+                .WithFooter($"Id сообщения: {message.Id}")
                 .WithColor(new DiscordColor("60afff")));
 
         await messageLogChannel.SendMessageAsync(logMessage);
