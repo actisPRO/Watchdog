@@ -1,14 +1,15 @@
-﻿using System.Diagnostics;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
+using Watchdog.Bot.Attributes;
 using Watchdog.Bot.Repositories.Interfaces;
 using Watchdog.Bot.Services.Interfaces;
 
 namespace Watchdog.Bot.Services;
 
+[Service]
 public sealed class GuildService : IGuildService
 {
-    private readonly ILogger<GuildService> _logger;
     private readonly IGuildRepository _guildRepository;
+    private readonly ILogger<GuildService> _logger;
 
     public GuildService(ILogger<GuildService> logger, IGuildRepository guildRepository)
     {
@@ -27,7 +28,7 @@ public sealed class GuildService : IGuildService
                 Id = guild.Id,
                 CreatedAt = guild.CreationTimestamp
             });
-            
+
             _logger.LogInformation("Guild {GuildName} ({GuildId}) was added to the database", guild.Name, guild.Id);
         }
     }

@@ -2,6 +2,7 @@
 using AutoMapper;
 using DSharpPlus;
 using DSharpPlus.Entities;
+using Watchdog.Bot.Attributes;
 using Watchdog.Bot.Constants;
 using Watchdog.Bot.Enums;
 using Watchdog.Bot.Exceptions;
@@ -14,11 +15,12 @@ using Watchdog.Bot.Strings;
 
 namespace Watchdog.Bot.Services;
 
+[Service]
 public sealed class LoggingService : ILoggingService
 {
     private readonly ILogger<LoggingService> _logger;
-    private readonly IMapper _mapper;
     private readonly ILogRepository _logRepository;
+    private readonly IMapper _mapper;
     private readonly IParameterService _parameterService;
 
     public LoggingService(ILogger<LoggingService> logger, IMapper mapper, ILogRepository logRepository,
@@ -56,7 +58,7 @@ public sealed class LoggingService : ILoggingService
     {
         try
         {
-            var channelId = 
+            var channelId =
                 await _parameterService.GetGuildParameterValueAsync<ulong>(ParameterNames.ModerationLogChannelId, guild.Id);
             var channel = guild.GetChannel(channelId.Value);
             return channel;
