@@ -11,6 +11,6 @@ public static class ServiceCollectionExtensions
         return Assembly.GetExecutingAssembly()
             .GetTypes()
             .Where(type => type.GetCustomAttribute<ServiceAttribute>() != null)
-            .Aggregate(services, (current, type) => current.AddTransient(type));
+            .Aggregate(services, (current, service) => current.AddTransient(service.GetInterfaces().First(), service));
     }
 }
