@@ -18,7 +18,7 @@ public sealed class UsageStatisticsService : IUsageStatisticsService
         await IncrementByAsync(key, guildId, 1);
     }
 
-    public async Task IncrementByAsync(string key, ulong guildId, int value)
+    public async Task IncrementByAsync(string key, ulong guildId, long value)
     {
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
         var statistic = await _usageStatistics.GetByIdAsync(key, guildId, today);

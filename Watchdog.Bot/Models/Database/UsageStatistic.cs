@@ -13,7 +13,7 @@ public sealed class UsageStatistic : IEntity
     
     public required DateOnly Date { get; set; }
     
-    public required int Value { get; set; }
+    public required long Value { get; set; }
 
     public object[] GetIdentity() => new object[] { Key, GuildId, Date };
 }

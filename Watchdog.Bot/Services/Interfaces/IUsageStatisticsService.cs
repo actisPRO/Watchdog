@@ -4,5 +4,5 @@ public interface IUsageStatisticsService
 {
     Task IncrementAsync(string key, ulong guildId);
 
-    Task IncrementByAsync(string key, ulong guildId, int value);
+    Task IncrementByAsync(string key, ulong guildId, long value);
 }
