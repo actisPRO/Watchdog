@@ -1,8 +1,10 @@
-﻿namespace Watchdog.Bot.Models.Database;
+﻿using Watchdog.Bot.Utils;
+
+namespace Watchdog.Bot.Models.Database;
 
 public sealed class Warning : IEntity
 {
-    public string Id { get; set; } = default!;
+    public string Id { get; set; } = IdGenerator.GenerateId();
 
     public required ulong GuildId { get; set; }
 
