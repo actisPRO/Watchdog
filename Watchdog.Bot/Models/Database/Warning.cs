@@ -1,7 +1,9 @@
-﻿using Watchdog.Bot.Utils;
+﻿using Microsoft.EntityFrameworkCore;
+using Watchdog.Bot.Utils;
 
 namespace Watchdog.Bot.Models.Database;
 
+[Index(nameof(GuildId), nameof(UserId))]
 public sealed class Warning : IEntity
 {
     public string Id { get; set; } = IdGenerator.GenerateId();

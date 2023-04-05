@@ -6,7 +6,7 @@ namespace Watchdog.Bot.Repositories.Interfaces;
 public interface IRepository<TEntity> where TEntity : IEntity
 {
     Task<TEntity?> GetByIdAsync(params object[] identity);
-    Task<int> GetCountAsync();
+    Task<int> GetCountAsync(Expression<Func<TEntity, bool>>? where = null);
     Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, object>>? orderBy = null, bool ascending = true);
     Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, object>>? orderBy = null, bool ascending = true);
     Task<TEntity> AddAsync(TEntity entity);

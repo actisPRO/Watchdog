@@ -26,14 +26,14 @@ public sealed class WarningService : IWarningService
     public async Task WarnMemberAsync(WarningData warningData)
     {
         await CreateDatabaseEntryAsync(warningData);
-        var warningCount = await GetWarningCountAsync(warningData.User.Id, warningData.Guild.Id);
-        await SendWarningNotificationAsync(warningData, warningCount);
+        var warningCount = await GetWarningCountAsync(warningData);
         await CreateWarningLogEntryAsync(warningData, warningCount);
+        await SendWarningNotificationAsync(warningData, warningCount);
     }
 
-    private async Task<int> GetWarningCountAsync(ulong userId, ulong guildId)
+    private async Task<int> GetWarningCountAsync(WarningData warningData)
     {
-        throw new NotImplementedException();
+        return await _warningRepository.GetCountAsync(warning => warning.GuildId == warningData.Guild.Id && warning.UserId == warningData.User.Id);
     }
 
     private async Task CreateDatabaseEntryAsync(WarningData warningData)
