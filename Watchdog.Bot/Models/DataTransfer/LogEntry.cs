@@ -1,4 +1,5 @@
 ﻿using DSharpPlus.Entities;
+using Watchdog.Bot.Constants;
 using Watchdog.Bot.Enums;
 
 namespace Watchdog.Bot.Models.DataTransfer;
@@ -19,6 +20,8 @@ public sealed record LogEntry
 
     public string Reason { get; private init; } = string.Empty;
 
+    public (string key, string value)[] AdditionalData { get; private init; } = Array.Empty<(string key, string value)>();
+
     private LogEntry()
     {
     }
@@ -31,7 +34,8 @@ public sealed record LogEntry
         DiscordUser executor,
         DiscordUser target,
         string reason,
-        DateTimeOffset timestamp)
+        DateTimeOffset timestamp,
+        (string key, string value)[]? additionalData = null)
     {
         return new LogEntry
         {
@@ -40,7 +44,8 @@ public sealed record LogEntry
             Target = target,
             Action = action,
             Reason = reason,
-            Timestamp = timestamp
+            Timestamp = timestamp,
+            AdditionalData = additionalData ?? Array.Empty<(string key, string value)>()
         };
     }
 
@@ -51,7 +56,8 @@ public sealed record LogEntry
         DiscordUser target,
         string reason,
         DateTimeOffset timestamp,
-        TimeSpan duration)
+        TimeSpan duration,
+        (string key, string value)[]? additionalData = null)
     {
         return new LogEntry
         {
@@ -61,7 +67,8 @@ public sealed record LogEntry
             Action = action,
             Reason = reason,
             Timestamp = DateTimeOffset.UtcNow,
-            ValidUntil = timestamp + duration
+            ValidUntil = timestamp + duration,
+            AdditionalData = additionalData ?? Array.Empty<(string key, string value)>()
         };
     }
 
@@ -70,7 +77,8 @@ public sealed record LogEntry
     #region Public factory methods
 
     public static LogEntry CreateForWarning(DiscordGuild guild, DiscordUser executor, DiscordUser target, string reason,
-        DateTimeOffset timestamp) => CreateWithoutDuration(ModerationAction.Warn, guild, executor, target, reason, timestamp);
+        DateTimeOffset timestamp, int warningCount) => CreateWithoutDuration(ModerationAction.Warn, guild, executor, target, reason, timestamp,
+        new[] { (AdditionalDataFields.WarningCount, warningCount.ToString()) });
 
     public static LogEntry CreateForKick(DiscordGuild guild, DiscordUser executor, DiscordUser target, string reason,
         DateTimeOffset timestamp) => CreateWithoutDuration(ModerationAction.Kick, guild, executor, target, reason, timestamp);

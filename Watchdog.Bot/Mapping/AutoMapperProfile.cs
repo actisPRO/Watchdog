@@ -16,12 +16,9 @@ public sealed class AutoMapperProfile : Profile
             .ConvertUsing(typeof(GuildParameterCreationDataGuildParameterConverter<>));
 
         CreateMap<LogEntry, ModerationLogEntry>()
-            .ForMember(x => x.GuildId, opt => opt.MapFrom(x => x.Guild.Id))
-            .ForMember(x => x.Guild, opt => opt.Ignore())
-            .ForMember(x => x.ExecutorId, opt => opt.MapFrom(x => x.Executor.Id))
-            .ForMember(x => x.TargetId, opt => opt.MapFrom(x => x.Target.Id));
-
-        CreateMap<WarningData, Warning>()
+            .ConvertUsing<LogEntryModerationLogEntryConverter>();
+        
+        CreateMap<WarningData, Warning>() 
             .ForMember(x => x.Id, opt => IdGenerator.GenerateId())
             .ForMember(x => x.GuildId, opt => opt.MapFrom(x => x.Guild.Id))
             .ForMember(x => x.UserId, opt => opt.MapFrom(x => x.User.Id))
