@@ -78,7 +78,7 @@ public sealed record LogEntry
 
     public static LogEntry CreateForWarning(DiscordGuild guild, DiscordUser executor, DiscordUser target, string reason,
         DateTimeOffset timestamp, int warningCount) => CreateWithoutDuration(ModerationAction.Warn, guild, executor, target, reason, timestamp,
-        new[] { (AdditionalDataFields.WarningCount, warningCount.ToString()) });
+        new[] { (WarningCount: AdditionalDataFields.WarningNumber, warningCount.ToString()) });
 
     public static LogEntry CreateForKick(DiscordGuild guild, DiscordUser executor, DiscordUser target, string reason,
         DateTimeOffset timestamp) => CreateWithoutDuration(ModerationAction.Kick, guild, executor, target, reason, timestamp);

@@ -60,7 +60,7 @@ public sealed class LoggingServiceTests : DbBaseTest
         actualEntry.TargetId.Should().Be(user.Id);
         actualEntry.Reason.Should().Be("Test reason");
         actualEntry.ValidUntil.Should().BeNull();
-        actualEntry.AdditionalData.Should().Be($"{{\"{AdditionalDataFields.WarningCount}\":\"5\"}}");
+        actualEntry.AdditionalData.Should().Be($"{{\"{AdditionalDataFields.WarningNumber}\":\"5\"}}");
     }
 
     private async Task<DiscordGuild> CreateTestGuild()

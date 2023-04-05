@@ -92,6 +92,9 @@ public sealed class LoggingService : ILoggingService
             builder = builder.AppendLine($"**{Phrases.Until}:** {Formatter.Timestamp(entry.ValidUntil.Value, TimestampFormat.ShortDateTime)}");
 
         builder = builder.AppendLine($"**{Phrases.Timestamp}:** {Formatter.Timestamp(entry.Timestamp, TimestampFormat.ShortDateTime)}");
+        
+        foreach (var (key, value) in entry.AdditionalData)
+            builder = builder.AppendLine($"**{AdditionalDataFields.GetTranslation(key)}:** {value}");
 
         return builder.ToString();
     }

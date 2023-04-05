@@ -139,5 +139,14 @@ namespace Watchdog.Bot.Strings {
                 return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of warnings.
+        /// </summary>
+        internal static string WarningNumber {
+            get {
+                return ResourceManager.GetString("WarningNumber", resourceCulture);
+            }
+        }
     }
 }
