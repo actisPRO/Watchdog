@@ -9,6 +9,7 @@ public static class ServiceCollectionExtensions
         return serviceCollection.AddTransient<IGuildRepository, GuildRepository>()
             .AddTransient<IParameterRepository, ParameterRepository>()
             .AddTransient<IGuildParameterRepository, GuildParameterRepository>()
-            .AddTransient<ILogRepository, LogRepository>();
+            .AddTransient<ILogRepository, LogRepository>()
+            .AddTransient<IUsageStatisticsRepository, UsageStatisticsRepository>();
     }
 }

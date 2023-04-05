@@ -3,7 +3,7 @@ using Watchdog.Bot.Utils;
 
 namespace Watchdog.Bot.Tests.Utils;
 
-public class TimeUtilsTests
+public sealed class TimeUtilsTests
 {
     [Test]
     [TestCase("1d10h30m", 1, 10, 30, 0)]
