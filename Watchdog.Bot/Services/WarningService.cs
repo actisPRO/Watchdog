@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DSharpPlus;
 using DSharpPlus.Exceptions;
 using Watchdog.Bot.Extensions;
 using Watchdog.Bot.Models.Database;
@@ -12,22 +11,22 @@ namespace Watchdog.Bot.Services;
 
 public sealed class WarningService : IWarningService
 {
-    private readonly ILogger<WarningService> _logger;
     private readonly IMapper _mapper;
     private readonly IWarningRepository _warningRepository;
+    private readonly ILoggingService _loggingService;
 
-    public WarningService(ILogger<WarningService> logger, IMapper mapper, IWarningRepository warningRepository)
+    public WarningService(IMapper mapper, IWarningRepository warningRepository, ILoggingService loggingService)
     {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _warningRepository = warningRepository ?? throw new ArgumentNullException(nameof(warningRepository));
+        _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
     }
 
     public async Task WarnMemberAsync(WarningData warningData)
     {
-        await CreateDatabaseEntryAsync(warningData);
+        var dbEntry = await CreateDatabaseEntryAsync(warningData);
         var warningCount = await GetWarningCountAsync(warningData);
-        await CreateWarningLogEntryAsync(warningData, warningCount);
+        await CreateWarningLogEntryAsync(warningData, warningCount, dbEntry.CreatedAt);
         await SendWarningNotificationAsync(warningData, warningCount);
     }
 
@@ -36,10 +35,10 @@ public sealed class WarningService : IWarningService
         return await _warningRepository.GetCountAsync(warning => warning.GuildId == warningData.Guild.Id && warning.UserId == warningData.User.Id);
     }
 
-    private async Task CreateDatabaseEntryAsync(WarningData warningData)
+    private async Task<Warning> CreateDatabaseEntryAsync(WarningData warningData)
     {
         var warning = _mapper.Map<Warning>(warningData);
-        await _warningRepository.AddAsync(warning);
+        return await _warningRepository.AddAsync(warning);
     }
 
     private async Task SendWarningNotificationAsync(WarningData warningData, int warningCount)
@@ -56,8 +55,10 @@ public sealed class WarningService : IWarningService
         }
     }
 
-    private async Task CreateWarningLogEntryAsync(WarningData warningData, int warningCount)
+    private async Task CreateWarningLogEntryAsync(WarningData warningData, int warningCount, DateTimeOffset timestamp)
     {
-        throw new NotImplementedException();
+        var logEntry = LogEntry.CreateForWarning(warningData.Guild, warningData.Moderator, warningData.User, warningData.Reason, timestamp,
+            warningCount);
+        await _loggingService.LogAsync(logEntry);
     }
 }
