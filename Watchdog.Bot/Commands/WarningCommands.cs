@@ -7,17 +7,17 @@ using Watchdog.Bot.Strings;
 
 namespace Watchdog.Bot.Commands;
 
-[SlashCommandGroup("warn", "Commands for managing warnings")]
 public sealed class WarningCommands : ApplicationCommandModule
 {
     private readonly IWarningService _warningService;
-
+    private IWarningService CheckedWarningService => _warningService.ThrowIfNull();
+    
     public WarningCommands(IWarningService warningService)
     {
         _warningService = warningService;
     }
 
-    [SlashCommand("add", "Adds a warning to a member")]
+    [SlashCommand("warn", "Adds a warning to a member")]
     public async Task AddWarning(InteractionContext ctx, 
         [Option("member", "Member to warn")] DiscordUser user,
         [Option("reason", "Warning reason")] string reason)
@@ -29,7 +29,7 @@ public sealed class WarningCommands : ApplicationCommandModule
             Guild = ctx.Guild,
             Reason = reason
         };
-        var warningCount = await _warningService.WarnMemberAsync(warningData);
+        var warningCount = await CheckedWarningService.WarnMemberAsync(warningData);
 
         var message = string.Format(Phrases.WarningModeratorConfirmation, user.ToNiceString(), warningCount).AsSuccess();
         await ctx.CreateResponseAsync(message, ephemeral: true);

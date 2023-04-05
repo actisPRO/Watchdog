@@ -69,6 +69,10 @@ namespace Watchdog.Bot.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("AdditionalData")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<decimal>("ExecutorId")
                         .HasColumnType("numeric(20,0)");
 

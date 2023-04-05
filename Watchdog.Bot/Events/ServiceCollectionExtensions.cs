@@ -7,6 +7,7 @@ public static class ServiceCollectionExtensions
         return serviceCollection
             .AddSingleton<IEventManager, MessageEventManager>()
             .AddSingleton<IEventManager, StartupEventManager>()
-            .AddSingleton<IEventManager, BasicGuildEventManager>();
+            .AddSingleton<IEventManager, BasicGuildEventManager>()
+            .AddSingleton<IEventManager, CommandEventManager>();
     }
 }

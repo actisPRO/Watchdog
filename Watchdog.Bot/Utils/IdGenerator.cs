@@ -7,7 +7,7 @@ public static class IdGenerator
     private static readonly DateTimeOffset Epoch = new DateTimeOffset(2023, 1, 1, 0, 0, 0, TimeSpan.Zero);
     private static readonly Random Random = new Random();
 
-    public static string GenerateId() => ReplaceDigits(GenerateTimestamp() + GenerateRandomness());
+    public static string GenerateId() => RandomizeDigits(GenerateTimestamp());
 
     private static string GenerateTimestamp()
     {
@@ -15,28 +15,13 @@ public static class IdGenerator
         var timestamp = now.ToUnixTimeMilliseconds() - Epoch.ToUnixTimeMilliseconds();
         return timestamp.ToString("X");
     }
-
-    private static string GenerateRandomness()
-    {
-        var random = Random.Next(0, 0x1000);
-        return random.ToString("X3");
-    }
     
-    private static string ReplaceDigits(string input)
+    private static string RandomizeDigits(string input)
     {
         var result = input.ToCharArray();
         for (int i = 0; i < result.Length; i++)
-        {
-            if (char.IsDigit(result[i])) 
-            {
-                var digit = int.Parse(result[i].ToString()); 
-                if (digit >= 0 && digit <= 9) 
-                {
-                    var uppercaseLetter = (char)(digit + 65); 
-                    result[i] = uppercaseLetter; 
-                }
-            }
-        }
+            if (char.IsDigit(result[i]))
+                result[i] = (char)Random.Next('A', 'Z' + 1);
 
         return new string(result);
     }
