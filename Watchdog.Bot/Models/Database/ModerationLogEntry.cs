@@ -12,6 +12,8 @@ public sealed class ModerationLogEntry : IEntity
     public Guild Guild { get; set; } = default!;
     
     public required ModerationAction Action { get; set; }
+    
+    public string? RelatedObjectId { get; set; }
 
     public required ulong ExecutorId { get; set; }
 

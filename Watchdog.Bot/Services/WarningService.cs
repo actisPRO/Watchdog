@@ -26,7 +26,7 @@ public sealed class WarningService : IWarningService
     {
         var dbEntry = await CreateDatabaseEntryAsync(warningData);
         var warningCount = await GetWarningCountAsync(warningData);
-        await CreateWarningLogEntryAsync(warningData, warningCount, dbEntry.CreatedAt);
+        await CreateWarningLogEntryAsync(warningData, warningCount, dbEntry.CreatedAt, dbEntry.Id);
         await SendWarningNotificationAsync(warningData, warningCount);
         return warningCount;
     }
@@ -56,9 +56,9 @@ public sealed class WarningService : IWarningService
         }
     }
 
-    private async Task CreateWarningLogEntryAsync(WarningData warningData, int warningCount, DateTimeOffset timestamp)
+    private async Task CreateWarningLogEntryAsync(WarningData warningData, int warningCount, DateTimeOffset timestamp, string id)
     {
-        var logEntry = LogEntry.CreateForWarning(warningData.Guild, warningData.Moderator, warningData.User, warningData.Reason, timestamp,
+        var logEntry = LogEntry.CreateForWarning(warningData.Guild, id, warningData.Moderator, warningData.User, warningData.Reason, timestamp,
             warningCount);
         await _loggingService.LogAsync(logEntry);
     }

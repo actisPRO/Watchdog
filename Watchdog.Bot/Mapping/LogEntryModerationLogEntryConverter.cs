@@ -12,6 +12,7 @@ public sealed class LogEntryModerationLogEntryConverter : ITypeConverter<LogEntr
         {
             GuildId = source.Guild.Id,
             ExecutorId = source.Executor.Id,
+            RelatedObjectId = source.RelatedObjectId,
             TargetId = source.Target.Id,
             Action = source.Action,
             Reason = source.Reason,
