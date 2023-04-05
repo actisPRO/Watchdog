@@ -38,7 +38,10 @@
     <data name="Notification_Warning" xml:space="preserve">
         <value>:warning: Ты получил предупреждение от модератора **{0}** на сервере **{1}**! Причина: **{2}**. Количество предупреждений: **{3}**.</value>
     </data>
-    <data name="WarningNumber" xml:space="preserve">
-        <value>Количнство предупреждений</value>
+    <data name="WarningCount" xml:space="preserve">
+        <value>Количество предупреждений</value>
+    </data>
+    <data name="WarningModeratorConfirmation" xml:space="preserve">
+        <value>Успешно выдано предупреждение участнику **{0}**. Количество предупреждений: **{1}**.</value>
     </data>
 </root>

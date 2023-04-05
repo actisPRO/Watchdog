@@ -4,5 +4,5 @@ namespace Watchdog.Bot.Services.Interfaces;
 
 public interface IWarningService
 {
-    Task WarnMemberAsync(WarningData warningData);
+    Task<int> WarnMemberAsync(WarningData warningData);
 }

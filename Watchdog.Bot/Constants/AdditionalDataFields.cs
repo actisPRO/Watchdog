@@ -10,7 +10,7 @@ public static class AdditionalDataFields
     {
         return key switch
         {
-            WarningNumber => Phrases.WarningNumber,
+            WarningNumber => Phrases.WarningCount,
             _ => key
         };
     }

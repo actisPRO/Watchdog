@@ -22,12 +22,13 @@ public sealed class WarningService : IWarningService
         _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
     }
 
-    public async Task WarnMemberAsync(WarningData warningData)
+    public async Task<int> WarnMemberAsync(WarningData warningData)
     {
         var dbEntry = await CreateDatabaseEntryAsync(warningData);
         var warningCount = await GetWarningCountAsync(warningData);
         await CreateWarningLogEntryAsync(warningData, warningCount, dbEntry.CreatedAt);
         await SendWarningNotificationAsync(warningData, warningCount);
+        return warningCount;
     }
 
     private async Task<int> GetWarningCountAsync(WarningData warningData)

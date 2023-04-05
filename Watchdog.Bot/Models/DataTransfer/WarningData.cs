@@ -4,11 +4,11 @@ namespace Watchdog.Bot.Models.DataTransfer;
 
 public sealed record WarningData
 {
-    public DiscordMember User { get; init; } = default!;
+    public required DiscordMember User { get; init; } = default!;
 
-    public DiscordGuild Guild { get; init; } = default!;
+    public required DiscordGuild Guild { get; init; } = default!;
 
-    public DiscordUser Moderator { get; init; } = default!;
+    public required DiscordUser Moderator { get; init; } = default!;
     
-    public string Reason { get; init; } = default!;
+    public required string Reason { get; init; } = default!;
 }

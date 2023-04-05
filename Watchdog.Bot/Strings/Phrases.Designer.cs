@@ -143,9 +143,18 @@ namespace Watchdog.Bot.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Number of warnings.
         /// </summary>
-        internal static string WarningNumber {
+        internal static string WarningCount {
             get {
-                return ResourceManager.GetString("WarningNumber", resourceCulture);
+                return ResourceManager.GetString("WarningCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully warned member **{0}**. Current warnings count: **{1}**..
+        /// </summary>
+        internal static string WarningModeratorConfirmation {
+            get {
+                return ResourceManager.GetString("WarningModeratorConfirmation", resourceCulture);
             }
         }
     }
