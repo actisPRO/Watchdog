@@ -69,6 +69,15 @@ namespace Watchdog.Bot.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID.
+        /// </summary>
+        internal static string ID {
+            get {
+                return ResourceManager.GetString("ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kick.
         /// </summary>
         internal static string Kick {
@@ -87,7 +96,7 @@ namespace Watchdog.Bot.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to :warning: You&apos;ve been warned by moderator **{0}** on the server **{1}**! Reason: **{2}**. Current warnings count: **{3}**..
+        ///   Looks up a localized string similar to :warning: You&apos;ve been warned by moderator **{0}** on the server **{1}**! Reason: **{2}**. Current warnings count: **{3}**. ID: **{4}**..
         /// </summary>
         internal static string Notification_Warning {
             get {

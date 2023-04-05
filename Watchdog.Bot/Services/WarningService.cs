@@ -27,7 +27,7 @@ public sealed class WarningService : IWarningService
         var dbEntry = await CreateDatabaseEntryAsync(warningData);
         var warningCount = await GetWarningCountAsync(warningData);
         await CreateWarningLogEntryAsync(warningData, warningCount, dbEntry.CreatedAt, dbEntry.Id);
-        await SendWarningNotificationAsync(warningData, warningCount);
+        await SendWarningNotificationAsync(warningData, warningCount, dbEntry.Id);
         return warningCount;
     }
 
@@ -42,12 +42,12 @@ public sealed class WarningService : IWarningService
         return await _warningRepository.AddAsync(warning);
     }
 
-    private async Task SendWarningNotificationAsync(WarningData warningData, int warningCount)
+    private async Task SendWarningNotificationAsync(WarningData warningData, int warningCount, string id)
     {
         try
         {
             var message = string.Format(Phrases.Notification_Warning, warningData.Moderator.ToNiceString(), warningData.Guild.ToNiceString(),
-                warningData.Reason, warningCount);
+                warningData.Reason, warningCount, id);
             await warningData.User.SendMessageAsync(message);
         }
         catch (UnauthorizedException)

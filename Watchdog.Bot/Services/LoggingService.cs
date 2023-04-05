@@ -83,7 +83,12 @@ public sealed class LoggingService : ILoggingService
     {
         var builder = new StringBuilder()
             .AppendLine($"**{GetMessageTitle(entry)}**")
-            .AppendLine()
+            .AppendLine();
+            
+        if (entry.RelatedObjectId != null)
+            builder = builder.AppendLine($"**{Phrases.ID}:** {entry.RelatedObjectId}");
+        
+        builder = builder
             .AppendLine($"**{Phrases.Moderator}:** {entry.Executor.ToNiceString()}")
             .AppendLine($"**{Phrases.User}:** {entry.Target.ToNiceString()}")
             .AppendLine($"**{Phrases.Reason}:** {entry.Reason}");
