@@ -87,6 +87,15 @@ namespace Watchdog.Bot.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to :warning: You&apos;ve been warned by moderator **{0}** on the server **{1}**! Reason: **{2}**. Current warnings count: **{3}**..
+        /// </summary>
+        internal static string Notification_Warning {
+            get {
+                return ResourceManager.GetString("Notification_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reason.
         /// </summary>
         internal static string Reason {
