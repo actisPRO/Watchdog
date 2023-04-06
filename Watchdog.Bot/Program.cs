@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Watchdog.Bot;
 using Watchdog.Bot.Events;
 using Watchdog.Bot.Mapping;
@@ -24,6 +25,10 @@ IHost host = Host.CreateDefaultBuilder(args)
             .AddDbContext<DbContext, DatabaseContext>(ServiceLifetime.Transient)
             .AddRepositories()
             .AddServices();
+    })
+    .UseSerilog((hostingContext, loggerConfiguration) =>
+    {
+        loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
     })
     .Build();
 
