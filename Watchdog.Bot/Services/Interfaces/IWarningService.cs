@@ -8,5 +8,5 @@ public interface IWarningService
 {
     Task<int> WarnMemberAsync(WarningData warningData);
 
-    Task<(bool foundWarning, int count)> RemoveWarningAsync(DiscordClient client, string warningId, DiscordGuild guild, DiscordMember moderator);
+    Task<(bool foundWarning, int count)> RemoveWarningAsync(DiscordMember user, string warningId, DiscordGuild guild, DiscordMember moderator);
 }

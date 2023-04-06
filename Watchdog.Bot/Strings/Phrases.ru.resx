@@ -50,4 +50,10 @@
     <data name="Notification_WarningDeletion" xml:space="preserve">
         <value>:envelope: Модератор **{0}** убрал твоё предупреждение с ID **{1}** на сервере **{2}**. Количество предупреждений: **{3}**.</value>
     </data>
+    <data name="WarningNotFound" xml:space="preserve">
+        <value>Предупреждение с ID **{0}** не найдено.</value>
+    </data>
+    <data name="WarningDeletionModeratorConfirmation" xml:space="preserve">
+        <value>Успешно удалено предупреждение **{0}** с пользователя **{1}**. Количество предупреждений:  **{2}**.</value>
+    </data>
 </root>

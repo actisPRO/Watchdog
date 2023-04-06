@@ -37,4 +37,24 @@ public sealed class WarningCommands : ApplicationCommandModule
         var message = string.Format(Phrases.WarningModeratorConfirmation, user.ToNiceString(), warningCount).AsSuccess();
         await ctx.CreateResponseAsync(message, ephemeral: true);
     }
+    
+    [SlashCommand("delwarn", "Removes a warning from a member")]
+    [SlashRequireGuild]
+    [SlashCommandPermissions(Permissions.KickMembers)]
+    public async Task DeleteWarning(InteractionContext ctx,
+        [Option("member", "Member to remove warning from")] DiscordUser user,
+        [Option("id", "Warning ID")] string warningId)
+    {
+        var member = (DiscordMember)user;
+        var (foundWarning, warningCount) = await _warningService.RemoveWarningAsync(member, warningId, ctx.Guild, ctx.Member);
+        if (!foundWarning)
+        {
+            var notFoundMessage = string.Format(Phrases.WarningNotFound, warningId).AsError();
+            await ctx.CreateResponseAsync(notFoundMessage, ephemeral: true);
+            return;
+        }
+
+        var message = string.Format(Phrases.WarningDeletionModeratorConfirmation, warningId, user.ToNiceString(), warningCount).AsSuccess();
+        await ctx.CreateResponseAsync(message, ephemeral: true);
+    }
 }

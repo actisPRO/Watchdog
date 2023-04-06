@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.Exceptions;
 using Watchdog.Bot.Extensions;
@@ -34,20 +33,18 @@ public sealed class WarningService : IWarningService
         return warningCount;
     }
 
-    public async Task<(bool foundWarning, int count)> RemoveWarningAsync(DiscordClient client, string warningId, DiscordGuild guild, DiscordMember moderator)
+    public async Task<(bool foundWarning, int count)> RemoveWarningAsync(DiscordMember user, string warningId, DiscordGuild guild,
+        DiscordMember moderator)
     {
-        var removedWarning = await DeleteDatabaseEntryAsync(guild.Id, warningId);
+        var removedWarning = await DeleteDatabaseEntryAsync(guild.Id, user.Id, warningId);
         if (removedWarning == null)
             return (false, 0);
 
         var warningCount = await GetWarningCountAsync(guild.Id, moderator.Id);
-        var user = await client.GetUserAsync(removedWarning.UserId);
         await CreateLogEntryAsync(false, guild, moderator, user, "", warningCount,
             DateTimeOffset.UtcNow, removedWarning.Id);
-
-        var guildMember = await guild.GetMemberAsync(user.Id);
-        if (guildMember != null)
-            await SendWarningDeletionNotificationAsync(guildMember, moderator, guild, warningCount, removedWarning.Id);
+        
+        await SendWarningDeletionNotificationAsync(user, moderator, guild, warningCount, removedWarning.Id);
         
         return (true, warningCount);
     }
@@ -63,10 +60,13 @@ public sealed class WarningService : IWarningService
         return await _warningRepository.AddAsync(warning);
     }
 
-    private async Task<Warning?> DeleteDatabaseEntryAsync(ulong guildId, string warningId)
+    private async Task<Warning?> DeleteDatabaseEntryAsync(ulong guildId, ulong memberId, string warningId)
     {
         var warning = await _warningRepository.GetByIdAsync(warningId, guildId);
         if (warning == null)
+            return null;
+
+        if (memberId != warning.UserId)
             return null;
 
         await _warningRepository.DeleteAsync(warningId, guildId);

@@ -168,11 +168,29 @@ namespace Watchdog.Bot.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Succesfully removed warning **{0}** from user **{1}**. Current warning count: **{2}**..
+        /// </summary>
+        internal static string WarningDeletionModeratorConfirmation {
+            get {
+                return ResourceManager.GetString("WarningDeletionModeratorConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Successfully warned member **{0}**. Current warnings count: **{1}**..
         /// </summary>
         internal static string WarningModeratorConfirmation {
             get {
                 return ResourceManager.GetString("WarningModeratorConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning with ID **{0}** does not exist..
+        /// </summary>
+        internal static string WarningNotFound {
+            get {
+                return ResourceManager.GetString("WarningNotFound", resourceCulture);
             }
         }
     }
