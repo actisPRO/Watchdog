@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Watchdog.Bot;
 using Watchdog.Bot.Events;
 using Watchdog.Bot.Mapping;
@@ -25,6 +26,7 @@ IHost host = Host.CreateDefaultBuilder(args)
             .AddRepositories()
             .AddServices();
     })
+    .UseSerilog()
     .Build();
 
 host.Run();
