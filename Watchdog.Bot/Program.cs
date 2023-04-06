@@ -21,7 +21,7 @@ IHost host = Host.CreateDefaultBuilder(args)
             .AddSingleton<DiscordBotClient>()
             .AddSingleton<ParameterInitializer>()
             .AddEventManagers()
-            .AddDbContext<DbContext, DatabaseContext>(ServiceLifetime.Transient)
+            .AddDbContext<DbContext, DatabaseContext>()
             .AddRepositories()
             .AddServices();
     })

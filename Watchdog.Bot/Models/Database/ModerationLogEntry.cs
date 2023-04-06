@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Watchdog.Bot.Enums;
+﻿using Watchdog.Bot.Enums;
 
 namespace Watchdog.Bot.Models.Database;
 
@@ -12,8 +11,6 @@ public sealed class ModerationLogEntry : IEntity
     public Guild Guild { get; set; } = default!;
     
     public required ModerationAction Action { get; set; }
-    
-    public string? RelatedObjectId { get; set; }
 
     public required ulong ExecutorId { get; set; }
 
@@ -24,9 +21,6 @@ public sealed class ModerationLogEntry : IEntity
     public DateTimeOffset? ValidUntil { get; set; }
     
     public required string Reason { get; set; }
-    
-    [DefaultValue("{}")]
-    public string AdditionalData { get; set; } = string.Empty;
 
     public object[] GetIdentity() => new object[] { Id };
 }

@@ -10,7 +10,6 @@ public static class ServiceCollectionExtensions
             .AddTransient<IGuildService, GuildService>()
             .AddTransient<IMessageLogService, MessageLogService>()
             .AddTransient<ILoggingService, LoggingService>()
-            .AddTransient<IUsageStatisticsService, UsageStatisticsService>()
-            .AddTransient<IWarningService, WarningService>();
+            .AddTransient<IUsageStatisticsService, UsageStatisticsService>();
     }
 }

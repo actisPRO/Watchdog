@@ -58,11 +58,10 @@ public sealed class CommandStatisticsEventManager : BaseEventManager
             else
             {
                 stopwatch!.Stop();
-                _logger.LogInformation("User {User} executed command '{Command}' in guild {Guild} in {Time} ms", args.Context.User.ToNiceString(),
-                    args.Context.CommandName, args.Context.Guild.ToNiceString(), stopwatch.ElapsedMilliseconds);
+                _logger.LogInformation("User {User} executed command {Command} in guild {Guild} in {Time} ms", args.Context.User.ToNiceString(),
+                    args.Context.Guild.ToNiceString(), args.Context.CommandName, stopwatch.ElapsedMilliseconds);
 
                 await UpdateCommandUsageStatisticsAsync(args.Context.CommandName, args.Context.Guild.Id, stopwatch.ElapsedMilliseconds);
-                return;
             }
         }
         
