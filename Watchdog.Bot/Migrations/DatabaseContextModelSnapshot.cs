@@ -69,10 +69,6 @@ namespace Watchdog.Bot.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("AdditionalData")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<decimal>("ExecutorId")
                         .HasColumnType("numeric(20,0)");
 
@@ -81,9 +77,6 @@ namespace Watchdog.Bot.Migrations
 
                     b.Property<string>("Reason")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("RelatedObjectId")
                         .HasColumnType("text");
 
                     b.Property<decimal>("TargetId")
@@ -141,34 +134,6 @@ namespace Watchdog.Bot.Migrations
                     b.ToTable("UsageStatistics");
                 });
 
-            modelBuilder.Entity("Watchdog.Bot.Models.Database.Warning", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("GuildId")
-                        .HasColumnType("numeric(20,0)");
-
-                    b.Property<decimal>("ModeratorId")
-                        .HasColumnType("numeric(20,0)");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("UserId")
-                        .HasColumnType("numeric(20,0)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GuildId", "UserId");
-
-                    b.ToTable("Warnings");
-                });
-
             modelBuilder.Entity("Watchdog.Bot.Models.Database.GuildParameter", b =>
                 {
                     b.HasOne("Watchdog.Bot.Models.Database.Guild", "Guild")
@@ -200,17 +165,6 @@ namespace Watchdog.Bot.Migrations
                 });
 
             modelBuilder.Entity("Watchdog.Bot.Models.Database.UsageStatistic", b =>
-                {
-                    b.HasOne("Watchdog.Bot.Models.Database.Guild", "Guild")
-                        .WithMany()
-                        .HasForeignKey("GuildId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Guild");
-                });
-
-            modelBuilder.Entity("Watchdog.Bot.Models.Database.Warning", b =>
                 {
                     b.HasOne("Watchdog.Bot.Models.Database.Guild", "Guild")
                         .WithMany()

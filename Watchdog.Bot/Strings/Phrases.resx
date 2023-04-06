@@ -42,16 +42,4 @@
     <data name="Until" xml:space="preserve">
         <value>Until</value>
     </data>
-    <data name="Notification_Warning" xml:space="preserve">
-        <value>:warning: You've been warned by moderator **{0}** on the server **{1}**! Reason: **{2}**. Current warnings count: **{3}**. ID: **{4}**.</value>
-    </data>
-    <data name="WarningCount" xml:space="preserve">
-        <value>Number of warnings</value>
-    </data>
-    <data name="WarningModeratorConfirmation" xml:space="preserve">
-        <value>Successfully warned member **{0}**. Current warnings count: **{1}**.</value>
-    </data>
-    <data name="ID" xml:space="preserve">
-        <value>ID</value>
-    </data>
 </root>

@@ -83,12 +83,7 @@ public sealed class LoggingService : ILoggingService
     {
         var builder = new StringBuilder()
             .AppendLine($"**{GetMessageTitle(entry)}**")
-            .AppendLine();
-            
-        if (entry.RelatedObjectId != null)
-            builder = builder.AppendLine($"**{Phrases.ID}:** {entry.RelatedObjectId}");
-        
-        builder = builder
+            .AppendLine()
             .AppendLine($"**{Phrases.Moderator}:** {entry.Executor.ToNiceString()}")
             .AppendLine($"**{Phrases.User}:** {entry.Target.ToNiceString()}")
             .AppendLine($"**{Phrases.Reason}:** {entry.Reason}");
@@ -97,9 +92,6 @@ public sealed class LoggingService : ILoggingService
             builder = builder.AppendLine($"**{Phrases.Until}:** {Formatter.Timestamp(entry.ValidUntil.Value, TimestampFormat.ShortDateTime)}");
 
         builder = builder.AppendLine($"**{Phrases.Timestamp}:** {Formatter.Timestamp(entry.Timestamp, TimestampFormat.ShortDateTime)}");
-        
-        foreach (var (key, value) in entry.AdditionalData)
-            builder = builder.AppendLine($"**{AdditionalDataFields.GetTranslation(key)}:** {value}");
 
         return builder.ToString();
     }

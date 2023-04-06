@@ -24,14 +24,9 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         return entity;
     }
 
-    public virtual async Task<int> GetCountAsync(Expression<Func<TEntity, bool>>? where = null)
+    public virtual async Task<int> GetCountAsync()
     {
-        var set = Context.Set<TEntity>().AsQueryable();
-        
-        if (where != null)
-            set = set.Where(where);
-        
-        return await set.CountAsync();
+        return await Context.Set<TEntity>().CountAsync();
     }
 
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, object>>? orderBy = null, bool ascending = true)
