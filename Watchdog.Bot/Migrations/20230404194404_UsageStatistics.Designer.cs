@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Watchdog.Bot;
@@ -11,9 +12,11 @@ using Watchdog.Bot;
 namespace Watchdog.Bot.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230404194404_UsageStatistics")]
+    partial class UsageStatistics
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,10 +72,6 @@ namespace Watchdog.Bot.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("AdditionalData")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<decimal>("ExecutorId")
                         .HasColumnType("numeric(20,0)");
 
@@ -81,9 +80,6 @@ namespace Watchdog.Bot.Migrations
 
                     b.Property<string>("Reason")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("RelatedObjectId")
                         .HasColumnType("text");
 
                     b.Property<decimal>("TargetId")
@@ -120,36 +116,6 @@ namespace Watchdog.Bot.Migrations
                     b.ToTable("Parameters");
                 });
 
-            modelBuilder.Entity("Watchdog.Bot.Models.Database.Warning", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("current_timestamp");
-
-                    b.Property<decimal>("GuildId")
-                        .HasColumnType("numeric(20,0)");
-
-                    b.Property<decimal>("ModeratorId")
-                        .HasColumnType("numeric(20,0)");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("UserId")
-                        .HasColumnType("numeric(20,0)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GuildId", "UserId");
-
-                    b.ToTable("Warnings");
-                });
-
             modelBuilder.Entity("Watchdog.Bot.Models.Database.UsageStatistic", b =>
                 {
                     b.Property<string>("Key")
@@ -161,8 +127,8 @@ namespace Watchdog.Bot.Migrations
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
-                    b.Property<long>("Value")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Value")
+                        .HasColumnType("integer");
 
                     b.HasKey("Key", "GuildId", "Date");
 
