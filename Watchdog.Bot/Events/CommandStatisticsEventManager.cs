@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics;
 using DSharpPlus;
+using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.EventArgs;
 using Watchdog.Bot.Attributes;
 using Watchdog.Bot.Enums;
@@ -22,14 +23,14 @@ public sealed class CommandStatisticsEventManager : BaseEventManager
     }
 
     [AsyncEventListener(EventType.SlashCommandInvoked)]
-    public Task SlashCommandInvoked(DiscordClient client, SlashCommandInvokedEventArgs args)
+    public Task SlashCommandInvoked(SlashCommandsExtension slashCommands, SlashCommandInvokedEventArgs args)
     {
         _stopwatches[(args.Context.User.Id, args.Context.Guild.Id, args.Context.CommandName)] = Stopwatch.StartNew();
         return Task.CompletedTask;
     }
 
     [AsyncEventListener(EventType.SlashCommandErrored)]
-    public Task SlashCommandErrored(DiscordClient client, SlashCommandErrorEventArgs args)
+    public Task SlashCommandErrored(SlashCommandsExtension slashCommands, SlashCommandErrorEventArgs args)
     {
         var key = (args.Context.User.Id, args.Context.Guild.Id, args.Context.CommandName);
         if (_stopwatches.ContainsKey(key))
@@ -43,7 +44,7 @@ public sealed class CommandStatisticsEventManager : BaseEventManager
     }
 
     [AsyncEventListener(EventType.SlashCommandExecuted)]
-    public async Task SlashCommandExecuted(DiscordClient client, SlashCommandExecutedEventArgs args)
+    public async Task SlashCommandExecuted(SlashCommandsExtension slashCommands, SlashCommandExecutedEventArgs args)
     {
         var key = (args.Context.User.Id, args.Context.Guild.Id, args.Context.CommandName);
 
