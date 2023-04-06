@@ -63,4 +63,7 @@
     <data name="WarningDeletionModeratorConfirmation" xml:space="preserve">
         <value>Succesfully removed warning **{0}** from user **{1}**. Current warning count: **{2}**.</value>
     </data>
+    <data name="WarningRemove" xml:space="preserve">
+        <value>Warning removal</value>
+    </data>
 </root>

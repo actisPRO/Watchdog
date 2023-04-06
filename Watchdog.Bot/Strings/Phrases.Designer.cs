@@ -193,5 +193,14 @@ namespace Watchdog.Bot.Strings {
                 return ResourceManager.GetString("WarningNotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning removal.
+        /// </summary>
+        internal static string WarningRemove {
+            get {
+                return ResourceManager.GetString("WarningRemove", resourceCulture);
+            }
+        }
     }
 }

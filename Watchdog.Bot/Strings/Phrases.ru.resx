@@ -56,4 +56,7 @@
     <data name="WarningDeletionModeratorConfirmation" xml:space="preserve">
         <value>Успешно удалено предупреждение **{0}** с пользователя **{1}**. Количество предупреждений:  **{2}**.</value>
     </data>
+    <data name="WarningRemove" xml:space="preserve">
+        <value>Удаление предупреждения</value>
+    </data>
 </root>

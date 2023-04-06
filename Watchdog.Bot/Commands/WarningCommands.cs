@@ -38,7 +38,7 @@ public sealed class WarningCommands : ApplicationCommandModule
         await ctx.CreateResponseAsync(message, ephemeral: true);
     }
     
-    [SlashCommand("delwarn", "Removes a warning from a member")]
+    [SlashCommand("warnrm", "Removes a warning from a member")]
     [SlashRequireGuild]
     [SlashCommandPermissions(Permissions.KickMembers)]
     public async Task DeleteWarning(InteractionContext ctx,

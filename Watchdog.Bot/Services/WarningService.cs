@@ -77,13 +77,13 @@ public sealed class WarningService : IWarningService
     {
         try
         {
-            var message = string.Format(Phrases.Notification_Warning, warningData.Moderator.ToNiceString(), warningData.Guild.ToNiceString(),
+            var message = string.Format(Phrases.Notification_Warning, warningData.Moderator.FullName(), warningData.Guild.Name,
                 warningData.Reason, warningCount, id);
             await warningData.User.SendMessageAsync(message);
         }
         catch (UnauthorizedException)
         {
-            // user blocked the bot/not server member
+            // user blocked the bot/not a server member
         }
     }
 
@@ -91,7 +91,7 @@ public sealed class WarningService : IWarningService
     {
         try
         {
-            var message = string.Format(Phrases.Notification_WarningDeletion, moderator.ToNiceString(), id, guild.ToNiceString(),
+            var message = string.Format(Phrases.Notification_WarningDeletion, moderator.FullName(), id, guild.Name,
                 warningCount);
             await user.SendMessageAsync(message);
         } catch (UnauthorizedException)
