@@ -18,7 +18,7 @@ public sealed class Warning : IEntity
 
     public required string Reason { get; set; }
 
-    public required DateTime CreatedAt { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
 
     public object[] GetIdentity() => new object[] { Id };
 }

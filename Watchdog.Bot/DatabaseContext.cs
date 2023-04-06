@@ -33,6 +33,11 @@ public sealed class DatabaseContext : DbContext
             .Property(x => x.DatabaseEntryCreatedAt)
             .HasDefaultValueSql("current_timestamp")
             .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+        
+        modelBuilder.Entity<Warning>()
+            .Property(x => x.CreatedAt)
+            .HasDefaultValueSql("current_timestamp")
+            .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
