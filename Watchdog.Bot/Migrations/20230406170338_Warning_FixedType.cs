@@ -19,23 +19,11 @@ namespace Watchdog.Bot.Migrations
                 oldClrType: typeof(DateTime),
                 oldType: "timestamp with time zone",
                 oldDefaultValueSql: "current_timestamp");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Warnings_Guilds_GuildId",
-                table: "Warnings",
-                column: "GuildId",
-                principalTable: "Guilds",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Warnings_Guilds_GuildId",
-                table: "Warnings");
-
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedAt",
                 table: "Warnings",
