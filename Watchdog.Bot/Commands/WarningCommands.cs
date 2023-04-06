@@ -18,7 +18,7 @@ public sealed class WarningCommands : ApplicationCommandModule
         _warningService = warningService.ThrowIfNull();
     }
 
-    [SlashCommand("warn", "Adds a warning to a member")]
+    [SlashCommand("warn", "Issues a warning to a member")]
     [SlashRequireGuild]
     [SlashCommandPermissions(Permissions.KickMembers)]
     public async Task AddWarning(InteractionContext ctx, 
