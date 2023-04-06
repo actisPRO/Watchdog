@@ -105,6 +105,15 @@ namespace Watchdog.Bot.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to :envelope: Moderator **{0}** has removed your warning with ID **{1}** on the server **{2}**. Current warnings count: **{3}**..
+        /// </summary>
+        internal static string Notification_WarningDeletion {
+            get {
+                return ResourceManager.GetString("Notification_WarningDeletion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reason.
         /// </summary>
         internal static string Reason {
