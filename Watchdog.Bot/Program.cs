@@ -26,7 +26,10 @@ IHost host = Host.CreateDefaultBuilder(args)
             .AddRepositories()
             .AddServices();
     })
-    .UseSerilog()
+    .UseSerilog((hostingContext, loggerConfiguration) =>
+    {
+        loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
+    })
     .Build();
 
 host.Run();
