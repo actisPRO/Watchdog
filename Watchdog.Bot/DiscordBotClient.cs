@@ -50,9 +50,8 @@ public sealed class DiscordBotClient
 
         foreach (var eventManager in _eventManagers)
             eventManager.RegisterEvents(discordClient);
-
-        // Регистрация команд
-        slashCommands.RegisterCommands(Assembly.GetExecutingAssembly());
+        
+        slashCommands.RegisterCommands(Assembly.GetExecutingAssembly(), debugGuildId);
 
         await discordClient.ConnectAsync();
     }

@@ -46,7 +46,7 @@ public sealed class LoggingServiceTests : DbBaseTest
         var user = CreateTestUser(2, "User", "0002");
         var timestamp = DateTimeOffset.UtcNow;
 
-        var entry = LogEntry.CreateForWarning(guild, moderator, user, "Test reason", timestamp);
+        var entry = LogEntry.CreateForWarning(guild, "ABC", moderator, user, "Test reason", timestamp, 5);
         
         // Act
         await _loggingService.LogAsync(entry);
@@ -55,11 +55,13 @@ public sealed class LoggingServiceTests : DbBaseTest
         // Assert
         actualEntry.Should().NotBeNull();
         actualEntry!.Action.Should().Be(ModerationAction.Warn);
+        actualEntry.RelatedObjectId.Should().Be("ABC");
         actualEntry.GuildId.Should().Be(guild.Id);
         actualEntry.ExecutorId.Should().Be(moderator.Id);
         actualEntry.TargetId.Should().Be(user.Id);
         actualEntry.Reason.Should().Be("Test reason");
         actualEntry.ValidUntil.Should().BeNull();
+        actualEntry.AdditionalData.Should().Be($"{{\"{AdditionalDataFields.WarningNumber}\":\"5\"}}");
     }
 
     private async Task<DiscordGuild> CreateTestGuild()

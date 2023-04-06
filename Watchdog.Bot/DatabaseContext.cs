@@ -15,6 +15,7 @@ public sealed class DatabaseContext : DbContext
     private DbSet<Parameter> Parameters { get; set; } = default!;
     private DbSet<GuildParameter> GuildParameters { get; set; } = default!;
     private DbSet<ModerationLogEntry> ModerationLog { get; set; } = default!;
+    private DbSet<Warning> Warnings { get; set; } = default!;
     private DbSet<UsageStatistic> UsageStatistics { get; set; } = default!;
 
     public DatabaseContext(IOptions<DatabaseOptions> databaseOptions)
@@ -30,6 +31,11 @@ public sealed class DatabaseContext : DbContext
         
         modelBuilder.Entity<Guild>()
             .Property(x => x.DatabaseEntryCreatedAt)
+            .HasDefaultValueSql("current_timestamp")
+            .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+        
+        modelBuilder.Entity<Warning>()
+            .Property(x => x.CreatedAt)
             .HasDefaultValueSql("current_timestamp")
             .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
     }
