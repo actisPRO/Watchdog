@@ -6,7 +6,7 @@ namespace Watchdog.Bot.Models.DataTransfer;
 
 public sealed record LogEntry
 {
-    public DiscordGuild Guild { get; private init; }
+    public DiscordGuild Guild { get; private init; } = default!;
 
     public ModerationAction Action { get; private init; }
 
