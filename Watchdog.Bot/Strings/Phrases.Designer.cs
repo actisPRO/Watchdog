@@ -69,6 +69,15 @@ namespace Watchdog.Bot.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID.
+        /// </summary>
+        internal static string ID {
+            get {
+                return ResourceManager.GetString("ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kick.
         /// </summary>
         internal static string Kick {
@@ -83,6 +92,15 @@ namespace Watchdog.Bot.Strings {
         internal static string Moderator {
             get {
                 return ResourceManager.GetString("Moderator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to :warning: You&apos;ve been warned by moderator **{0}** on the server **{1}**! Reason: **{2}**. Current warnings count: **{3}**. ID: **{4}**..
+        /// </summary>
+        internal static string Notification_Warning {
+            get {
+                return ResourceManager.GetString("Notification_Warning", resourceCulture);
             }
         }
         
@@ -128,6 +146,24 @@ namespace Watchdog.Bot.Strings {
         internal static string Warning {
             get {
                 return ResourceManager.GetString("Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of warnings.
+        /// </summary>
+        internal static string WarningCount {
+            get {
+                return ResourceManager.GetString("WarningCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully warned member **{0}**. Current warnings count: **{1}**..
+        /// </summary>
+        internal static string WarningModeratorConfirmation {
+            get {
+                return ResourceManager.GetString("WarningModeratorConfirmation", resourceCulture);
             }
         }
     }
