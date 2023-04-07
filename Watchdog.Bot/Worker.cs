@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Watchdog.Bot;
 
 public sealed class Worker : BackgroundService
