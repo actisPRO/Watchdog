@@ -54,4 +54,10 @@
     <data name="ID" xml:space="preserve">
         <value>ID</value>
     </data>
+    <data name="Notification_Kick" xml:space="preserve">
+        <value>:warning: You've been kicked from the server **{0}** by moderator **{1}**. Reason: **{2}**.</value>
+    </data>
+    <data name="ModeratorConfirmation_Kick" xml:space="preserve">
+        <value>Successfully kicked member **{0}**.</value>
+    </data>
 </root>
