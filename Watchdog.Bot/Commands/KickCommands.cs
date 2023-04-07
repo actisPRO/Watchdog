@@ -24,8 +24,9 @@ public sealed class KickCommands : ApplicationCommandModule
         [Option("member", "Member to kick")] DiscordUser user,
         [Option("reason", "Kick reason")] string reason)
     {
+        var username = user.ToNiceString();
         await _kickService.KickMemberAsync((DiscordMember)user, ctx.Member, reason);
-        var message = string.Format(Phrases.ModeratorConfirmation_Kick, user.ToNiceString()).AsSuccess();
+        var message = string.Format(Phrases.ModeratorConfirmation_Kick, username).AsSuccess();
         await ctx.CreateResponseAsync(message, ephemeral: true);
     }
 }
