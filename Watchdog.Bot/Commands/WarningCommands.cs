@@ -9,6 +9,8 @@ using Watchdog.Bot.Strings;
 
 namespace Watchdog.Bot.Commands;
 
+[SlashRequireGuild]
+[SlashCommandPermissions(Permissions.KickMembers)]
 public sealed class WarningCommands : ApplicationCommandModule
 {
     private readonly IWarningService _warningService;
@@ -19,8 +21,6 @@ public sealed class WarningCommands : ApplicationCommandModule
     }
 
     [SlashCommand("warn", "Issues a warning to a member")]
-    [SlashRequireGuild]
-    [SlashCommandPermissions(Permissions.KickMembers)]
     public async Task AddWarning(InteractionContext ctx, 
         [Option("member", "Member to warn")] DiscordUser user,
         [Option("reason", "Warning reason")] string reason)
@@ -39,8 +39,6 @@ public sealed class WarningCommands : ApplicationCommandModule
     }
     
     [SlashCommand("warnrm", "Removes a warning from a member")]
-    [SlashRequireGuild]
-    [SlashCommandPermissions(Permissions.KickMembers)]
     public async Task DeleteWarning(InteractionContext ctx,
         [Option("member", "Member to remove warning from")] DiscordUser user,
         [Option("id", "Warning ID")] string warningId)
