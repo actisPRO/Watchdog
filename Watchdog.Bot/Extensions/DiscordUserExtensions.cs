@@ -8,7 +8,7 @@ public static class DiscordUserExtensions
     {
         return $"{user.Username}#{user.Discriminator} ({user.Id})";
     }
-
+    
     public static string FullName(this DiscordUser user)
     {
         return $"{user.Username}#{user.Discriminator}";

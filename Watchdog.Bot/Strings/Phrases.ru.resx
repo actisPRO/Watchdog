@@ -47,6 +47,12 @@
     <data name="ID" xml:space="preserve">
         <value>ID</value>
     </data>
+    <data name="Notification_Kick" xml:space="preserve">
+        <value>:warning: Тебя кикнули с сервера **{0}**. Модератор: **{1}**. Причина: **{2}**.</value>
+    </data>
+    <data name="ModeratorConfirmation_Kick" xml:space="preserve">
+        <value>Успешно кикнут участник **{0}**.</value>
+    </data>
     <data name="Notification_WarningDeletion" xml:space="preserve">
         <value>:envelope: Модератор **{0}** убрал твоё предупреждение с ID **{1}** на сервере **{2}**. Количество предупреждений: **{3}**.</value>
     </data>

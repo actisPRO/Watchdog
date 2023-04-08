@@ -96,6 +96,24 @@ namespace Watchdog.Bot.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Successfully kicked member **{0}**..
+        /// </summary>
+        internal static string ModeratorConfirmation_Kick {
+            get {
+                return ResourceManager.GetString("ModeratorConfirmation_Kick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to :warning: You&apos;ve been kicked from the server **{0}** by moderator **{1}**. Reason: **{2}**..
+        /// </summary>
+        internal static string Notification_Kick {
+            get {
+                return ResourceManager.GetString("Notification_Kick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to :warning: You&apos;ve been warned by moderator **{0}** on the server **{1}**! Reason: **{2}**. Current warnings count: **{3}**. ID: **{4}**..
         /// </summary>
         internal static string Notification_Warning {
