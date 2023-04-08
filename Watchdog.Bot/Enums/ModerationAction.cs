@@ -3,6 +3,7 @@
 public enum ModerationAction
 {
     Warn,
+    DeleteWarn,
     Kick,
     Ban
 }

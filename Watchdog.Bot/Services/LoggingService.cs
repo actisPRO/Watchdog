@@ -87,11 +87,13 @@ public sealed class LoggingService : ILoggingService
             
         if (entry.RelatedObjectId != null)
             builder = builder.AppendLine($"**{Phrases.ID}:** {entry.RelatedObjectId}");
-        
+
         builder = builder
             .AppendLine($"**{Phrases.Moderator}:** {entry.Executor.ToNiceString()}")
-            .AppendLine($"**{Phrases.User}:** {entry.Target.ToNiceString()}")
-            .AppendLine($"**{Phrases.Reason}:** {entry.Reason}");
+            .AppendLine($"**{Phrases.User}:** {entry.Target.ToNiceString()}");
+        
+        if (!string.IsNullOrWhiteSpace(entry.Reason)) 
+            builder = builder.AppendLine($"**{Phrases.Reason}:** {entry.Reason}");
 
         if (entry.ValidUntil != null)
             builder = builder.AppendLine($"**{Phrases.Until}:** {Formatter.Timestamp(entry.ValidUntil.Value, TimestampFormat.ShortDateTime)}");
@@ -109,9 +111,10 @@ public sealed class LoggingService : ILoggingService
         return entry.Action switch
         {
             ModerationAction.Warn => Phrases.Warning,
+            ModerationAction.DeleteWarn => Phrases.WarningRemove,
             ModerationAction.Kick => Phrases.Kick,
             ModerationAction.Ban => Phrases.Ban,
-            _ => throw new ArgumentOutOfRangeException()
+            _ => Enum.GetName(entry.Action) ?? throw new ArgumentOutOfRangeException(nameof(entry.Action))
         };
     }
 }

@@ -9,6 +9,8 @@ using Watchdog.Bot.Strings;
 
 namespace Watchdog.Bot.Commands;
 
+[SlashRequireGuild]
+[SlashCommandPermissions(Permissions.KickMembers)]
 public sealed class WarningCommands : ApplicationCommandModule
 {
     private readonly IWarningService _warningService;
@@ -18,9 +20,7 @@ public sealed class WarningCommands : ApplicationCommandModule
         _warningService = warningService.ThrowIfNull();
     }
 
-    [SlashCommand("warn", "Adds a warning to a member")]
-    [SlashRequireGuild]
-    [SlashCommandPermissions(Permissions.KickMembers)]
+    [SlashCommand("warn", "Issues a warning to a member")]
     public async Task AddWarning(InteractionContext ctx, 
         [Option("member", "Member to warn")] DiscordUser user,
         [Option("reason", "Warning reason")] string reason)
@@ -35,6 +35,24 @@ public sealed class WarningCommands : ApplicationCommandModule
         var warningCount = await _warningService.WarnMemberAsync(warningData);
 
         var message = string.Format(Phrases.WarningModeratorConfirmation, user.ToNiceString(), warningCount).AsSuccess();
+        await ctx.CreateResponseAsync(message, ephemeral: true);
+    }
+    
+    [SlashCommand("warnrm", "Removes a warning from a member")]
+    public async Task DeleteWarning(InteractionContext ctx,
+        [Option("member", "Member to remove warning from")] DiscordUser user,
+        [Option("id", "Warning ID")] string warningId)
+    {
+        var member = (DiscordMember)user;
+        var (foundWarning, warningCount) = await _warningService.RemoveWarningAsync(member, warningId, ctx.Guild, ctx.Member);
+        if (!foundWarning)
+        {
+            var notFoundMessage = string.Format(Phrases.WarningNotFound, warningId).AsError();
+            await ctx.CreateResponseAsync(notFoundMessage, ephemeral: true);
+            return;
+        }
+
+        var message = string.Format(Phrases.WarningDeletionModeratorConfirmation, warningId, user.ToNiceString(), warningCount).AsSuccess();
         await ctx.CreateResponseAsync(message, ephemeral: true);
     }
 }

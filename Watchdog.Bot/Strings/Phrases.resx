@@ -59,5 +59,16 @@
     </data>
     <data name="ModeratorConfirmation_Kick" xml:space="preserve">
         <value>Successfully kicked member **{0}**.</value>
+    <data name="Notification_WarningDeletion" xml:space="preserve">
+        <value>:envelope: Moderator **{0}** has removed your warning with ID **{1}** on the server **{2}**. Current warnings count: **{3}**.</value>
+    </data>
+    <data name="WarningNotFound" xml:space="preserve">
+        <value>Warning with ID **{0}** does not exist.</value>
+    </data>
+    <data name="WarningDeletionModeratorConfirmation" xml:space="preserve">
+        <value>Succesfully removed warning **{0}** from user **{1}**. Current warning count: **{2}**.</value>
+    </data>
+    <data name="WarningRemove" xml:space="preserve">
+        <value>Warning removal</value>
     </data>
 </root>

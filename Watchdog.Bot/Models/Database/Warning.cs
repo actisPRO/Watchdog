@@ -3,6 +3,7 @@ using Watchdog.Bot.Utils;
 
 namespace Watchdog.Bot.Models.Database;
 
+[PrimaryKey(nameof(Id), nameof(GuildId))]
 [Index(nameof(GuildId), nameof(UserId))]
 public sealed class Warning : IEntity
 {
@@ -20,5 +21,5 @@ public sealed class Warning : IEntity
 
     public DateTimeOffset CreatedAt { get; set; }
 
-    public object[] GetIdentity() => new object[] { Id };
+    public object[] GetIdentity() => new object[] { Id, GuildId };
 }
