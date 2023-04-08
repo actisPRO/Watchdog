@@ -59,6 +59,7 @@
     </data>
     <data name="ModeratorConfirmation_Kick" xml:space="preserve">
         <value>Successfully kicked member **{0}**.</value>
+    </data>   
     <data name="Notification_WarningDeletion" xml:space="preserve">
         <value>:envelope: Moderator **{0}** has removed your warning with ID **{1}** on the server **{2}**. Current warnings count: **{3}**.</value>
     </data>
