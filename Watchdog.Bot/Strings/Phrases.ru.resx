@@ -52,6 +52,7 @@
     </data>
     <data name="ModeratorConfirmation_Kick" xml:space="preserve">
         <value>Успешно кикнут участник **{0}**.</value>
+    </data>
     <data name="Notification_WarningDeletion" xml:space="preserve">
         <value>:envelope: Модератор **{0}** убрал твоё предупреждение с ID **{1}** на сервере **{2}**. Количество предупреждений: **{3}**.</value>
     </data>
