@@ -40,7 +40,7 @@ public sealed class WarningService : IWarningService
         if (removedWarning == null)
             return (false, 0);
 
-        var warningCount = await GetWarningCountAsync(guild.Id, moderator.Id);
+        var warningCount = await GetWarningCountAsync(guild.Id, user.Id);
         await CreateLogEntryAsync(false, guild, moderator, user, "", warningCount,
             DateTimeOffset.UtcNow, removedWarning.Id);
         
