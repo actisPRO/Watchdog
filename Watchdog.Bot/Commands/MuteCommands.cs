@@ -5,6 +5,7 @@ using DSharpPlus.SlashCommands.Attributes;
 using Watchdog.Bot.Extensions;
 using Watchdog.Bot.Services.Interfaces;
 using Watchdog.Bot.Strings;
+using Watchdog.Bot.Utils;
 
 namespace Watchdog.Bot.Commands;
 
@@ -27,8 +28,15 @@ public sealed class MuteCommands : ApplicationCommandModule
         string duration,
         [Option("reason", "Mute reason")] string reason)
     {
+        var timeSpan = TimeParserUtils.ParseTimeSpan(duration);
+        
+        if (timeSpan.TotalDays > 27) // 27 days is the maximum duration for a mute
+        {
+            await ctx.CreateResponseAsync(Phrases.MuteDurationError, true);
+        }
+        
         var username = user.ToNiceString();
-        await _muteService.MuteMemberAsync((DiscordMember)user, ctx.Member, duration, reason);
+        await _muteService.MuteMemberAsync((DiscordMember)user, ctx.Member, timeSpan, reason);
         var message = string.Format(Phrases.ModerationConfirmation_Timeout, username).AsSuccess();
         await ctx.CreateResponseAsync(message, true);
     }
@@ -36,7 +44,7 @@ public sealed class MuteCommands : ApplicationCommandModule
     [SlashCommand("unmute", "Unmute member on a server")]
     public async Task RemoveMemberTimeout(InteractionContext ctx,
         [Option("member", "Member to unmute")] DiscordUser user,
-        [Option("reason", "Unmute reason")] string reason)
+        [Option("reason", "Unmute reason")] string reason = "")
     {
         var username = user.ToNiceString();
         await _muteService.UnmuteMemberAsync((DiscordMember)user, ctx.Member, reason);

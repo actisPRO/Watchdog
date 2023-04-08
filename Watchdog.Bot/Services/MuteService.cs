@@ -20,18 +20,18 @@ public class MuteService : IMuteService
         _loggingService = loggingService;
     }
 
-    public async Task MuteMemberAsync(DiscordMember member, DiscordUser moderator, string duration, string reason)
+    public async Task MuteMemberAsync(DiscordMember member, DiscordUser moderator, TimeSpan duration, string reason)
     {
-        var timeSpan = TimeParserUtils.ParseTimeSpan(duration);
-        var until = DateTimeOffset.UtcNow.Add(timeSpan);
-        var formattedUntil = Formatter.Timestamp(until, TimestampFormat.RelativeTime);
+        var until = DateTimeOffset.UtcNow.Add(duration);
+
+        var formattedUntil = Formatter.Timestamp(until);
         
         var message = string.Format(Phrases.Notification_Mute, member.Guild.Name, moderator.FullName(), reason, formattedUntil);
 
         await NotifyMemberAsync(member, message);
         await member.TimeoutAsync(until, reason);
 
-        var logEntry = LogEntry.CreateForMute(member.Guild, moderator, member, reason, DateTimeOffset.UtcNow, timeSpan);
+        var logEntry = LogEntry.CreateForMute(member.Guild, moderator, member, reason, DateTimeOffset.UtcNow, duration);
         await _loggingService.LogAsync(logEntry);
     }
 

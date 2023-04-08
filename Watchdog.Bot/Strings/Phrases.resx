@@ -90,4 +90,7 @@
     <data name="Notification_Mute" xml:space="preserve">
         <value>:warning: You've been muted on the server **{0}** by moderator **{1}**. Reason: **{2}**. Until: **{3}**</value>
     </data>
+    <data name="MuteDurationError" xml:space="preserve">
+        <value>:error: Mute duration cannot be longer than 27 days</value>
+    </data>
 </root>

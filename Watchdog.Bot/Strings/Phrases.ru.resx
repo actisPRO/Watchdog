@@ -81,4 +81,7 @@
     <data name="Notification_Unmute" xml:space="preserve">
         <value>:warning: Снят мут на сервере **{0}**. Модератор: **{1}**. Причина: **{2}**.</value>
     </data>
+    <data name="MuteDurationError" xml:space="preserve">
+        <value>:error: Время мута не может превышать больше 27 дней</value>
+    </data>
 </root>
