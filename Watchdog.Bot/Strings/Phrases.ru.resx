@@ -33,7 +33,7 @@
         <value>Пользователь</value>
     </data>
     <data name="Warning" xml:space="preserve">
-        <value>Модератор</value>
+        <value>Предупреждение</value>
     </data>
     <data name="Notification_Warning" xml:space="preserve">
         <value>:warning: Ты получил предупреждение от модератора **{0}** на сервере **{1}**! Причина: **{2}**. Количество предупреждений: **{3}**. ID: **{4}**.</value>
@@ -46,5 +46,17 @@
     </data>
     <data name="ID" xml:space="preserve">
         <value>ID</value>
+    </data>
+    <data name="Notification_WarningDeletion" xml:space="preserve">
+        <value>:envelope: Модератор **{0}** убрал твоё предупреждение с ID **{1}** на сервере **{2}**. Количество предупреждений: **{3}**.</value>
+    </data>
+    <data name="WarningNotFound" xml:space="preserve">
+        <value>Предупреждение с ID **{0}** не найдено.</value>
+    </data>
+    <data name="WarningDeletionModeratorConfirmation" xml:space="preserve">
+        <value>Успешно удалено предупреждение **{0}** с пользователя **{1}**. Количество предупреждений:  **{2}**.</value>
+    </data>
+    <data name="WarningRemove" xml:space="preserve">
+        <value>Удаление предупреждения</value>
     </data>
 </root>
