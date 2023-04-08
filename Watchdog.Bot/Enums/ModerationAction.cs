@@ -5,5 +5,7 @@ public enum ModerationAction
     Warn,
     DeleteWarn,
     Kick,
-    Ban
+    Ban,
+    Mute,
+    Unmute
 }

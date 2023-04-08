@@ -98,6 +98,13 @@ public sealed record LogEntry
     public static LogEntry CreateForBan(DiscordGuild guild, string banId, DiscordUser executor, DiscordUser target, string reason,
         DateTimeOffset timestamp, TimeSpan duration) =>
         CreateWithDuration(ModerationAction.Ban, guild, executor, target, reason, timestamp, duration, banId);
+    
+    public static LogEntry CreateForMute(DiscordGuild guild, DiscordUser executor, DiscordUser target, string reason,
+        DateTimeOffset timestamp, TimeSpan duration)
+        => CreateWithDuration(ModerationAction.Mute, guild, executor, target, reason, timestamp, duration);
+    public static LogEntry CreateForUnmute(DiscordGuild guild, DiscordUser executor, DiscordUser target, string reason,
+        DateTimeOffset timestamp)
+        => CreateWithoutDuration(ModerationAction.Unmute, guild, executor, target, reason, timestamp);
 
     #endregion
 }

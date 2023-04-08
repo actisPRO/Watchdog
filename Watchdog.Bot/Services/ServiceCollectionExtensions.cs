@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
             .AddTransient<ILoggingService, LoggingService>()
             .AddTransient<IUsageStatisticsService, UsageStatisticsService>()
             .AddTransient<IWarningService, WarningService>()
-            .AddTransient<IKickService, KickService>();
+            .AddTransient<IKickService, KickService>()
+            .AddTransient<IMuteService, MuteService>();
     }
 }

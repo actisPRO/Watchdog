@@ -87,6 +87,24 @@ namespace Watchdog.Bot.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Successfully removed timeout from member **{0}**..
+        /// </summary>
+        internal static string ModerationConfirmation_RemoveTimeout {
+            get {
+                return ResourceManager.GetString("ModerationConfirmation_RemoveTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully added timeout to member **{0}**..
+        /// </summary>
+        internal static string ModerationConfirmation_Timeout {
+            get {
+                return ResourceManager.GetString("ModerationConfirmation_Timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Moderator.
         /// </summary>
         internal static string Moderator {
@@ -110,6 +128,24 @@ namespace Watchdog.Bot.Strings {
         internal static string Notification_Kick {
             get {
                 return ResourceManager.GetString("Notification_Kick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to :warning: You&apos;ve been muted on the server **{0}** by moderator **{1}**. Reason: **{2}**. Until: **{3}**.
+        /// </summary>
+        internal static string Notification_Mute {
+            get {
+                return ResourceManager.GetString("Notification_Mute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to :warning: You&apos;ve been unmuted on the server **{0}** by moderator **{1}**. Reason: **{2}**..
+        /// </summary>
+        internal static string Notification_Unmute {
+            get {
+                return ResourceManager.GetString("Notification_Unmute", resourceCulture);
             }
         }
         
